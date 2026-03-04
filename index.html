@@ -33,6 +33,55 @@
         .animate-float {
             animation: float 6s ease-in-out infinite;
         }
+        
+        /* Flip Card Styles */
+        .flip-card {
+            perspective: 1000px;
+            height: 280px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+        
+        .flip-card-back::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .flip-card-back::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .flip-card-back::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .flip-card-back::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -43,7 +92,7 @@
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <img src="silastik.png" alt="Silastik BPS" class="h-12">
+                    <img src="https://silastik.bps.go.id/v3/img/header_pdo_new.png" alt="Silastik BPS" class="h-12">
                     <div class="leading-tight">
                         <div class="font-bold text-lg text-white">Silastik</div>
                         <div class="text-xs text-blue-200">Sistem Informasi Layanan Statistik</div>
@@ -306,14 +355,14 @@
                     </div>
                 </div>
                 
-                <!-- Top Right - Real-time Updates -->
+                <!-- Top Right - Economic Indicators -->
                 <div class="absolute top-44 right-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 shadow-xl animate-float" style="animation-delay: 0.5s;">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                            <i data-lucide="activity" class="w-5 h-5 text-emerald-300"></i>
+                        <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-orange-300"></i>
                         </div>
                         <div>
-                            <p class="text-white font-semibold">Real-time Updates</p>
+                            <p class="text-white font-semibold">Indikator Sosial Ekonomi</p>
                         </div>
                     </div>
                 </div>
@@ -331,14 +380,14 @@
                     </div>
                 </div>
                 
-                <!-- Bottom Right - Economic Indicators -->
+                <!-- Bottom Right - Real-time Updates -->
                 <div class="absolute bottom-40 right-24 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 shadow-xl animate-float" style="animation-delay: 1.5s;">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-orange-300"></i>
+                        <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                            <i data-lucide="activity" class="w-5 h-5 text-emerald-300"></i>
                         </div>
                         <div>
-                            <p class="text-white font-semibold">Indikator Sosial Ekonomi</p>
+                            <p class="text-white font-semibold">Data Terkini</p>
                         </div>
                     </div>
                 </div>
@@ -459,7 +508,7 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
                 <p class="text-sm font-semibold text-orange-500 uppercase tracking-wide mb-3">Jelajahi Berdasarkan Kategori</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kategori Produk Kami</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kenali Produk Kami</h2>
                 <p class="text-gray-600 max-w-4xl mx-auto">
                     Temukan Produk Statistik PNBP BPS yang mencakup setiap aspek sosial dan ekonomi Indonesia
                 </p>
@@ -467,44 +516,89 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <!-- Data Mikro -->
-                <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="database" class="w-8 h-8 text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Data Mikro</h3>
-                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                        Sensus, survei, dll
-                    </p>
-                    <div class="flex items-center text-blue-600 font-semibold text-sm">
-                        <span>120+ datasets</span>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="database" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Data Mikro</h3>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Sensus, survei, dll
+                            </p>
+                            <div class="flex items-center text-blue-600 font-semibold text-sm">
+                                <span>120+ datasets</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-xl">
+                            <h4 class="text-lg font-bold text-white mb-3">Data Mikro</h4>
+                            <p class="text-white text-sm leading-relaxed mb-3">
+                                Data tentang karakteristik unit populasi yang dikumpulkan dengan cara sensus, survei, kompilasi produk administrasi, dan cara lain sesuai perkembangan ilmu pengetahuan dan teknologi.
+                            </p>
+                            <p class="text-blue-100 text-xs leading-relaxed">
+                                Tarif atas jenis Penerimaan Negara Bukan Pajak (PNBP) yang berasal dari penjualan data mikro dihitung secara regresif yaitu pengenaan tarif PNBP dihitung dengan mempergunakan pengenaan tarif yang semakin menurun ketika jumlah pembelian data mikro meningkat berdasarkan interval tertentu.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Publikasi Elektronik -->
-                <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-emerald-200">
-                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="book-open" class="w-8 h-8 text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Publikasi Elektronik</h3>
-                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                        Publikasi tanpa watermark
-                    </p>
-                    <div class="flex items-center text-emerald-600 font-semibold text-sm">
-                        <span>85+ datasets</span>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="book-open" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Publikasi Elektronik</h3>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Publikasi tanpa watermark
+                            </p>
+                            <div class="flex items-center text-emerald-600 font-semibold text-sm">
+                                <span>85+ datasets</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-6 shadow-xl">
+                            <h4 class="text-lg font-bold text-white mb-3">Publikasi Elektronik</h4>
+                            <p class="text-white text-sm leading-relaxed mb-3">
+                                Publikasi yang dibuat dengan menggunakan perangkat komputer atau peralatan elektronik lainnya dan disimpan pada suatu media penyimpanan (hard disk, flash disk, CD, dll) dalam bentuk file, sehingga dapat dibuka dan diedit dengan menggunakan perangkat komputer.
+                            </p>
+                            <p class="text-emerald-100 text-xs leading-relaxed">
+                                Tarif publikasi elektronik (softcopy) adalah menurut jumlah halaman publikasi dan dalam bentuk PDF.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Peta Digital -->
-                <div class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-orange-200">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="map" class="w-8 h-8 text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Peta Wilkerstat</h3>
-                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                        Wilayah Kerja Statistik dalam SHP
-                    </p>
-                    <div class="flex items-center text-orange-600 font-semibold text-sm">
-                        <span>55+ datasets</span>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="map" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Peta Wilkerstat</h3>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                                Wilayah Kerja Statistik dalam SHP
+                            </p>
+                            <div class="flex items-center text-orange-600 font-semibold text-sm">
+                                <span>55+ datasets</span>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 shadow-xl">
+                            <h4 class="text-lg font-bold text-white mb-3">Peta Wilkerstat</h4>
+                            <p class="text-white text-sm leading-relaxed mb-3">
+                                Peta digital wilayah kerja statistik (wilkerstat) yang dimaksud adalah dalam bentuk Shape File (SHP).
+                            </p>
+                            <p class="text-orange-100 text-xs leading-relaxed">
+                                Tersedia dalam berbagai level administrasi: Provinsi, Kabupaten/Kota, Kecamatan, hingga Desa/Kelurahan untuk mendukung analisis spasial dan pemetaan wilayah Indonesia.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -522,7 +616,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Produk Populer</h2>
                     <p class="text-gray-600">Produk yang paling banyak diminati oleh peneliti dan institusi</p>
                 </div>
-                <a href="#all-products" class="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors">
+                <a href="katalog.html" class="hidden md:flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors">
                     Lihat Semua Produk
                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
@@ -1027,4 +1121,3 @@
     </script>
 </body>
 </html>
-

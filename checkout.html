@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Silastik BPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        :root {
+            --navy-bps: #001F4F;
+            --navy-dark: #001838;
+            --navy-light: #002966;
+            --green-primary: #10b981;
+            --orange-primary: #f97316;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Navigation -->
+    <nav class="bg-[#001F4F] shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <img src="https://silastik.bps.go.id/v3/img/header_pdo_new.png" alt="Silastik BPS" class="h-12">
+                    <div class="leading-none">
+                        <div class="font-bold text-lg text-white mb-0.5">Silastik</div>
+                        <div class="text-xs text-blue-200">Sistem Informasi Layanan Statistik</div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-blue-100 hover:text-blue-200 transition-colors">Beranda</a>
+                    <a href="katalog.html" class="text-blue-100 hover:text-blue-200 transition-colors">Katalog</a>
+                    
+                    <!-- Layanan Dropdown -->
+                    <div class="relative group">
+                        <button class="text-blue-100 hover:text-blue-200 transition-colors flex items-center gap-1">
+                            Layanan
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        
+                        <!-- Mega Menu -->
+                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-screen max-w-4xl bg-white rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="p-8">
+                                <div class="grid grid-cols-3 gap-8">
+                                    
+                                    <!-- Column 1 - Informasi -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Informasi</h3>
+                                        <div class="space-y-3">
+                                            <a href="#tentang" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover/item:bg-blue-200 transition-colors">
+                                                    <i data-lucide="info" class="w-5 h-5 text-blue-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Tentang Kami</p>
+                                                    <p class="text-xs text-gray-500">Profil dan visi misi</p>
+                                                </div>
+                                            </a>
+                                            
+                                            <a href="#berita" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center group-hover/item:bg-emerald-200 transition-colors">
+                                                    <i data-lucide="newspaper" class="w-5 h-5 text-emerald-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Berita Kami</p>
+                                                    <p class="text-xs text-gray-500">Update terbaru</p>
+                                                </div>
+                                            </a>
+                                            
+                                            <a href="#layanan" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover/item:bg-orange-200 transition-colors">
+                                                    <i data-lucide="briefcase" class="w-5 h-5 text-orange-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Layanan Kami</p>
+                                                    <p class="text-xs text-gray-500">Produk & layanan</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Column 2 - Kontak & Bantuan -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Kontak & Bantuan</h3>
+                                        <div class="space-y-3">
+                                            <a href="#kontak" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover/item:bg-blue-200 transition-colors">
+                                                    <i data-lucide="phone" class="w-5 h-5 text-blue-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Kontak Kami</p>
+                                                    <p class="text-xs text-gray-500">Hubungi tim kami</p>
+                                                </div>
+                                            </a>
+                                            
+                                            <a href="#pengaduan" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center group-hover/item:bg-red-200 transition-colors">
+                                                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Pengaduan</p>
+                                                    <p class="text-xs text-gray-500">Sampaikan keluhan</p>
+                                                </div>
+                                            </a>
+                                            
+                                            <a href="#faq" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover/item:bg-purple-200 transition-colors">
+                                                    <i data-lucide="help-circle" class="w-5 h-5 text-purple-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">FAQ</p>
+                                                    <p class="text-xs text-gray-500">Pertanyaan umum</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Column 3 - Panduan & Kebijakan -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Panduan & Kebijakan</h3>
+                                        <div class="space-y-3">
+                                            <a href="#panduan" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center group-hover/item:bg-emerald-200 transition-colors">
+                                                    <i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Panduan</p>
+                                                    <p class="text-xs text-gray-500">Cara penggunaan</p>
+                                                </div>
+                                            </a>
+                                            
+                                            <a href="#syarat" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover/item:bg-orange-200 transition-colors">
+                                                    <i data-lucide="file-text" class="w-5 h-5 text-orange-600"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-gray-900 mb-0.5">Syarat & Ketentuan</p>
+                                                    <p class="text-xs text-gray-500">Aturan penggunaan</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                        <!-- CTA Box -->
+                                        <div class="mt-6 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4">
+                                            <p class="text-white font-semibold text-sm mb-2">Butuh Konsultasi?</p>
+                                            <p class="text-blue-100 text-xs mb-3">Tim kami siap membantu Anda</p>
+                                            <a href="#consultation" class="inline-flex items-center gap-1 text-white text-xs font-semibold hover:gap-2 transition-all">
+                                                Konsultasi Sekarang
+                                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center gap-3">
+                    <button class="text-white hover:text-blue-200 px-4 py-2 rounded-lg hover:bg-white/10 transition-all">
+                        Masuk
+                    </button>
+                    <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-md">
+                        Daftar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Steps -->
+    <div class="bg-white border-b border-gray-200 py-6">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between">
+                    <!-- Step 1 -->
+                    <div class="flex items-center flex-1">
+                        <div class="flex items-center gap-3">
+                            <div id="step1-circle" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+                                1
+                            </div>
+                            <div>
+                                <p id="step1-text" class="font-semibold text-gray-900 text-sm">Overview Data</p>
+                                <p class="text-xs text-gray-500">Ringkasan pesanan</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex items-center flex-1">
+                        <div class="flex items-center gap-3">
+                            <div id="step2-circle" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">
+                                2
+                            </div>
+                            <div>
+                                <p id="step2-text" class="font-semibold text-gray-500 text-sm">Abstrak</p>
+                                <p class="text-xs text-gray-400">Tujuan penggunaan</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex items-center flex-1">
+                        <div class="flex items-center gap-3">
+                            <div id="step3-circle" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">
+                                3
+                            </div>
+                            <div>
+                                <p id="step3-text" class="font-semibold text-gray-500 text-sm">SPPD</p>
+                                <p class="text-xs text-gray-400">Identitas pengguna</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="flex items-center">
+                        <div class="flex items-center gap-3">
+                            <div id="step4-circle" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">
+                                4
+                            </div>
+                            <div>
+                                <p id="step4-text" class="font-semibold text-gray-500 text-sm">Pembayaran</p>
+                                <p class="text-xs text-gray-400">Selesaikan pesanan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Step 1: Overview Data -->
+            <div id="stepContent1" class="bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Overview Data Pesanan</h2>
+                
+                <div id="orderItems" class="space-y-4 mb-6">
+                    <!-- Order items will be rendered here -->
+                </div>
+                
+                <div class="border-t border-gray-200 pt-4">
+                    <div class="flex items-center justify-between text-lg font-bold">
+                        <span class="text-gray-900">Total Pembayaran</span>
+                        <span id="totalPrice" class="text-blue-600">Rp 0</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <a href="katalog.html" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        Kembali ke Katalog
+                    </a>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all font-medium shadow-md">
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Abstrak -->
+            <div id="stepContent2" class="bg-white rounded-xl shadow-sm p-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Abstrak Penelitian</h2>
+                <p class="text-gray-600 mb-6">Jelaskan tujuan dan rencana penggunaan data</p>
+                
+                <div class="space-y-6">
+                    <!-- Latar Belakang -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Latar Belakang <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="latarBelakang"
+                            rows="4" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Jelaskan latar belakang penelitian atau penggunaan data..."
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Tujuan -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Tujuan <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="tujuan"
+                            rows="4" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Jelaskan tujuan penggunaan data..."
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Metode -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Metode <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="metode"
+                            rows="4" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Jelaskan metode analisis yang akan digunakan..."
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Rancangan Hasil -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Rancangan Hasil <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="rancanganHasil"
+                            rows="4" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Jelaskan rancangan hasil yang diharapkan..."
+                        ></textarea>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <button onclick="prevStep()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        Kembali
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all font-medium shadow-md">
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: SPPD -->
+            <div id="stepContent3" class="bg-white rounded-xl shadow-sm p-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Identitas Pengguna Data</h2>
+                <p class="text-gray-600 mb-4">SPPD (Surat Perjanjian Penggunaan Data) wajib diisi</p>
+                
+                <!-- Info Box -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                    <div class="flex gap-3">
+                        <i data-lucide="info" class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"></i>
+                        <div class="text-sm text-green-900">
+                            <p class="font-semibold mb-1">Info</p>
+                            <p class="text-green-700">SPPD wajib dikirimkan secara fisik ke kantor BPS, dan ditandatangani di atas materai oleh:</p>
+                            <ol class="list-decimal ml-5 mt-2 text-green-700">
+                                <li>Pejabat eselon II untuk instansi pemerintah pusat</li>
+                                <li>Pejabat eselon III untuk instansi pemerintah</li>
+                                <li>Setara manajer untuk instansi swasta</li>
+                                <li>Dekan dan/atau pejabat setingkat eselon II di lingkungan Lembaga Pendidikan Tinggi</li>
+                                <li>Peneliti/Mahasiswa/Pribadi untuk pengguna umum (pribadi)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lihat SPPD Button -->
+                <div class="mb-6">
+                    <a href="https://silastik.bps.go.id/v3/assets/pdf/SPPD.pdf" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        Lihat Contoh SPPD
+                    </a>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Kepemilikan Data -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            Kepemilikan Data <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="kepemilikan" value="pribadi" class="w-4 h-4 text-blue-600" checked>
+                                <span class="text-sm text-gray-700">Pribadi</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="kepemilikan" value="institusi" class="w-4 h-4 text-blue-600">
+                                <span class="text-sm text-gray-700">Institusi/Lembaga</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Tipe Pribadi -->
+                    <div id="tipePribadiField">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Tipe Pribadi <span class="text-red-500">*</span>
+                        </label>
+                        <select id="tipePribadi" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">--Pilih--</option>
+                            <option value="peneliti">Peneliti</option>
+                            <option value="mahasiswa">Mahasiswa</option>
+                            <option value="umum">Umum</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Nama -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Nama Lengkap <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="nama"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Masukkan nama lengkap"
+                        >
+                    </div>
+                    
+                    <!-- Telepon -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Telepon <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="telepon"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Contoh: 081234567890"
+                        >
+                    </div>
+                    
+                    <!-- Lokasi -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Lokasi <span class="text-red-500">*</span>
+                        </label>
+                        <select id="lokasi" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">--Pilih--</option>
+                            <option value="aceh">Aceh</option>
+                            <option value="sumut">Sumatera Utara</option>
+                            <option value="sumbar">Sumatera Barat</option>
+                            <option value="riau">Riau</option>
+                            <option value="jambi">Jambi</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Alamat -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Alamat <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="alamat"
+                            rows="3" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Tuliskan alamat lengkap guna keperluan pengiriman berkas..."
+                        ></textarea>
+                    </div>
+                    
+                    <!-- NPWP -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            NPWP <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="npwp"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Isikan angka saja"
+                        >
+                    </div>
+                    
+                    <!-- Checkbox Persetujuan -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="persetujuanSPPD" class="w-5 h-5 text-blue-600 rounded mt-0.5">
+                            <span class="text-sm text-gray-700">
+                                Identitas yang diisikan telah benar dan sesuai dengan persyaratan SPPD
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <button onclick="prevStep()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        Kembali
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all font-medium shadow-md">
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Pembayaran -->
+            <div id="stepContent4" class="bg-white rounded-xl shadow-sm p-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Pembayaran</h2>
+                <p class="text-gray-600 mb-6">Pilih metode pembayaran dan selesaikan transaksi</p>
+                
+                <!-- Payment Summary -->
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-gray-700 font-medium">Total Pembayaran</span>
+                        <span id="finalTotalPrice" class="text-3xl font-bold text-blue-900">Rp 0</span>
+                    </div>
+                    <div class="text-sm text-blue-700">
+                        <p>Pembayaran dapat dilakukan melalui transfer bank atau metode lainnya</p>
+                    </div>
+                </div>
+                
+                <!-- Payment Method -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-gray-900 mb-4">Metode Pembayaran</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer transition-colors">
+                            <input type="radio" name="payment" value="transfer" class="w-5 h-5 text-blue-600" checked>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-900">Transfer Bank</p>
+                                <p class="text-sm text-gray-500">BNI, BRI, Mandiri</p>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer transition-colors">
+                            <input type="radio" name="payment" value="va" class="w-5 h-5 text-blue-600">
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-900">Virtual Account</p>
+                                <p class="text-sm text-gray-500">Nomor VA otomatis</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <button onclick="prevStep()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        Kembali
+                    </button>
+                    <button onclick="completeOrder()" class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-all font-medium shadow-md">
+                        Selesaikan Pesanan
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="checkout.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

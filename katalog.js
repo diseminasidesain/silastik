@@ -308,8 +308,28 @@ const products = [
 let cart = [];
 let currentView = 'grid'; // 'grid' or 'list'
 
+// Load cart from localStorage
+function loadCart() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+            updateCartUI();
+        } catch (e) {
+            console.error('Error loading cart:', e);
+            cart = [];
+        }
+    }
+}
+
+// Save cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    loadCart();
     renderProducts(products);
     initializeFilters();
     initializeViewToggle();
@@ -353,6 +373,14 @@ function createProductCardGrid(product) {
         orange: 'bg-orange-50 text-orange-700'
     };
     
+    // Icon berdasarkan kategori
+    const categoryIcons = {
+        microdata: 'database',
+        publication: 'book-open',
+        map: 'map'
+    };
+    const icon = categoryIcons[product.type] || product.icon;
+    
     const priceDisplay = isFree 
         ? '<span class="text-emerald-600 font-bold text-sm">Gratis</span>'
         : `<span class="text-blue-900 font-bold text-sm">Rp ${product.price.toLocaleString('id-ID')}</span>`;
@@ -391,10 +419,10 @@ function createProductCardGrid(product) {
     }
     
     return `
-        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100 p-4 flex flex-col">
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-4 flex flex-col">
             <div class="flex items-start justify-between mb-3">
                 <div class="w-10 h-10 bg-${product.badgeColor}-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="${product.icon}" class="w-5 h-5 text-${product.badgeColor}-600"></i>
+                    <i data-lucide="${icon}" class="w-5 h-5 text-${product.badgeColor}-600"></i>
                 </div>
                 <div>
                     <span class="text-xs font-semibold px-2 py-1 ${badgeColors[product.badgeColor]} rounded-full whitespace-nowrap">
@@ -433,7 +461,7 @@ function createProductCardGrid(product) {
                 </div>
                 <button 
                     onclick="addToCart('${product.id}')"
-                    class="${buttonClass} px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5"
+                    class="${buttonClass} px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 hover:scale-105"
                 >
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     Tambah
@@ -451,6 +479,14 @@ function createProductCardList(product) {
         green: 'bg-emerald-50 text-emerald-700',
         orange: 'bg-orange-50 text-orange-700'
     };
+
+    // Icon berdasarkan kategori
+    const categoryIcons = {
+        microdata: 'database',
+        publication: 'book-open',
+        map: 'map'
+    };
+    const icon = categoryIcons[product.type] || product.icon;
 
     const priceDisplay = isFree
         ? '<span class="text-emerald-600 font-bold">Gratis</span>'
@@ -478,10 +514,10 @@ function createProductCardList(product) {
     }
 
     return `
-        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100 p-5">
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-5">
             <div class="flex items-start gap-4">
                 <div class="w-14 h-14 bg-${product.badgeColor}-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="${product.icon}" class="w-7 h-7 text-${product.badgeColor}-600"></i>
+                    <i data-lucide="${icon}" class="w-7 h-7 text-${product.badgeColor}-600"></i>
                 </div>
 
                 <div class="flex-1 min-w-0">
@@ -516,7 +552,7 @@ function createProductCardList(product) {
                     </div>
                     <button
                         onclick="addToCart('${product.id}')"
-                        class="${buttonClass} px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap mt-4"
+                        class="${buttonClass} px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap hover:scale-105"
                     >
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         Tambah ke Keranjang
@@ -622,20 +658,20 @@ function initializeViewToggle() {
     
     gridViewBtn.addEventListener('click', () => {
         currentView = 'grid';
-        gridViewBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
-        gridViewBtn.classList.remove('border-gray-200', 'text-gray-600');
-        listViewBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
-        listViewBtn.classList.add('border-gray-200', 'text-gray-600');
+        // Grid aktif: bg biru, icon putih, no hover effect
+        gridViewBtn.className = 'p-2 border-2 bg-blue-600 border-blue-600 text-white rounded-lg transition-all';
+        // List inaktif: bg putih, icon biru, hover border biru
+        listViewBtn.className = 'p-2 border-2 bg-white border-gray-200 text-blue-600 rounded-lg hover:border-blue-600 transition-all';
         
         applyCurrentFilters();
     });
     
     listViewBtn.addEventListener('click', () => {
         currentView = 'list';
-        listViewBtn.classList.add('border-blue-600', 'bg-blue-600', 'text-white');
-        listViewBtn.classList.remove('border-gray-200', 'text-gray-600');
-        gridViewBtn.classList.remove('border-blue-600', 'bg-blue-600', 'text-white');
-        gridViewBtn.classList.add('border-gray-200', 'text-gray-600');
+        // List aktif: bg biru, icon putih, no hover effect
+        listViewBtn.className = 'p-2 border-2 bg-blue-600 border-blue-600 text-white rounded-lg transition-all';
+        // Grid inaktif: bg putih, icon biru, hover border biru
+        gridViewBtn.className = 'p-2 border-2 bg-white border-gray-200 text-blue-600 rounded-lg hover:border-blue-600 transition-all';
         
         applyCurrentFilters();
     });
@@ -674,17 +710,159 @@ function updateResultCount(count) {
 // Cart Functions
 function initializeCart() {
     const floatingCart = document.getElementById('floatingCart');
+    const cartModal = document.getElementById('cartModal');
+    const closeCartModal = document.getElementById('closeCartModal');
+    const clearCartBtn = document.getElementById('clearCart');
+    const checkoutCartBtn = document.getElementById('checkoutCart');
+    
+    // Open modal
     floatingCart.addEventListener('click', () => {
+        openCartModal();
+    });
+    
+    // Close modal
+    closeCartModal.addEventListener('click', () => {
+        closeCartModalFunc();
+    });
+    
+    // Close on backdrop click
+    cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+            closeCartModalFunc();
+        }
+    });
+    
+    // Clear cart
+    clearCartBtn.addEventListener('click', () => {
+        if (cart.length === 0) return;
+        
+        if (confirm('Apakah Anda yakin ingin mengosongkan keranjang?')) {
+            cart = [];
+            saveCart();
+            updateCartUI();
+            renderCartItems();
+            showNotification('Keranjang berhasil dikosongkan', 'info');
+        }
+    });
+    
+    // Checkout
+    checkoutCartBtn.addEventListener('click', () => {
         if (cart.length === 0) {
-            showNotification('Keranjang Anda masih kosong', 'info');
+            showNotification('Keranjang masih kosong', 'info');
             return;
         }
         
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        alert(`Keranjang Belanja (${cart.length} item)\n\n` + 
-              cart.map((item, index) => `${index + 1}. ${item.title}\n   Rp ${item.price.toLocaleString('id-ID')}`).join('\n\n') +
-              `\n\n━━━━━━━━━━━━━━━━━━━━\nTotal: Rp ${total.toLocaleString('id-ID')}`);
+        // Save cart to localStorage
+        saveCart();
+        
+        // Redirect to checkout page
+        window.location.href = 'checkout.html';
     });
+}
+
+function openCartModal() {
+    const cartModal = document.getElementById('cartModal');
+    cartModal.classList.remove('hidden');
+    cartModal.classList.add('flex');
+    renderCartItems();
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCartModalFunc() {
+    const cartModal = document.getElementById('cartModal');
+    cartModal.classList.add('hidden');
+    cartModal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+function renderCartItems() {
+    const container = document.getElementById('cartItemsContainer');
+    const emptyState = document.getElementById('cartEmptyState');
+    const cartItemCount = document.getElementById('cartItemCount');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    if (cart.length === 0) {
+        container.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        cartItemCount.textContent = '0';
+        cartTotal.textContent = 'Rp 0';
+        return;
+    }
+    
+    container.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+    
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    cartItemCount.textContent = cart.length;
+    cartTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    
+    container.innerHTML = cart.map((item, index) => {
+        const product = products.find(p => p.id === item.id);
+        const badgeColors = {
+            blue: 'bg-blue-50 text-blue-700',
+            green: 'bg-emerald-50 text-emerald-700',
+            orange: 'bg-orange-50 text-orange-700'
+        };
+        
+        // Icon berdasarkan kategori
+        const categoryIcons = {
+            microdata: 'database',
+            publication: 'book-open',
+            map: 'map'
+        };
+        const icon = categoryIcons[product.type] || product.icon;
+        
+        // Data type info
+        let dataTypeInfo = '';
+        if (item.dataType === 'full') {
+            dataTypeInfo = '<span class="text-xs text-green-600 font-medium">Fullset</span>';
+        } else if (item.dataType === 'custom') {
+            dataTypeInfo = `
+                <div class="text-xs text-orange-600 font-medium mb-1">Non Full Data Set</div>
+                <div class="text-xs text-gray-500">
+                    <div class="mb-1"><strong>Wilayah:</strong> ${item.regions.slice(0, 2).join(', ')}${item.regions.length > 2 ? ` +${item.regions.length - 2} lainnya` : ''}</div>
+                    <div><strong>Variabel:</strong> ${item.variables.slice(0, 2).join(', ')}${item.variables.length > 2 ? ` +${item.variables.length - 2} lainnya` : ''}</div>
+                </div>
+            `;
+        }
+        
+        // Edit button for microdata
+        const editButton = product.type === 'microdata' ? `
+            <button onclick="editCartItem(${index})" class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-blue-100 transition-colors" title="Edit">
+                <i data-lucide="edit-2" class="w-4 h-4 text-blue-600"></i>
+            </button>
+        ` : '';
+        
+        return `
+            <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg mb-3">
+                <div class="w-12 h-12 bg-${product.badgeColor}-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="${icon}" class="w-6 h-6 text-${product.badgeColor}-600"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <h4 class="font-semibold text-gray-900 text-sm line-clamp-2">${item.title}</h4>
+                        <div class="flex gap-1">
+                            ${editButton}
+                            <button onclick="removeFromCart(${index})" class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-red-100 transition-colors" title="Hapus">
+                                <i data-lucide="trash-2" class="w-4 h-4 text-red-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="inline-block text-xs font-semibold px-2 py-1 ${badgeColors[product.badgeColor]} rounded-full mb-2">
+                        ${product.badge}
+                    </span>
+                    <div class="mb-2">
+                        ${dataTypeInfo}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-blue-900">Rp ${item.price.toLocaleString('id-ID')}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    lucide.createIcons();
 }
 
 function addToCart(productId) {
@@ -703,6 +881,73 @@ function addToCart(productId) {
     
     // Show notification
     showNotification(`${product.title} ditambahkan ke keranjang`, 'success');
+}
+
+function removeFromCart(index) {
+    const item = cart[index];
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+    renderCartItems();
+    showNotification('Produk dihapus dari keranjang', 'info');
+}
+
+function editCartItem(index) {
+    const item = cart[index];
+    const product = products.find(p => p.id === item.id);
+    
+    if (!product || product.type !== 'microdata') return;
+    
+    // Remove item from cart temporarily
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+    
+    // Close cart modal
+    closeCartModalFunc();
+    
+    // Open data selection modal with pre-filled data
+    currentProductForSelection = item.id;
+    
+    if (item.dataType === 'custom' && item.selectedRegionIds && item.selectedVariableIds) {
+        selectedRegions = [...item.selectedRegionIds];
+        selectedVariables = [...item.selectedVariableIds];
+    } else {
+        selectedRegions = [];
+        selectedVariables = [];
+    }
+    
+    const modal = document.getElementById('dataSelectionModal');
+    const title = document.getElementById('modalProductTitle');
+    const fullPrice = document.getElementById('fullPrice');
+    
+    title.textContent = product.title;
+    fullPrice.textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+    
+    // Set radio button based on data type
+    if (item.dataType === 'full') {
+        document.querySelector('input[name="dataType"][value="full"]').checked = true;
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('priceResult').classList.add('hidden');
+    } else {
+        document.querySelector('input[name="dataType"][value="nonfull"]').checked = true;
+        document.getElementById('step2').classList.remove('hidden');
+        renderRegions();
+        renderVariables();
+        // Show price if it was calculated before
+        if (item.price > 0) {
+            updateCustomPrice();
+            document.getElementById('priceResult').classList.remove('hidden');
+        } else {
+            document.getElementById('priceResult').classList.add('hidden');
+        }
+    }
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => lucide.createIcons(), 100);
 }
 
 function updateCartUI() {
@@ -736,3 +981,417 @@ function showNotification(message, type = 'success') {
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
+
+
+// Data Selection Modal
+let currentProductForSelection = null;
+let selectedRegions = [];
+let selectedVariables = [];
+
+// Sample data untuk testing (hanya Aceh dengan kabupaten/kota)
+const regions = [
+    { 
+        id: 'aceh', 
+        name: 'Aceh', 
+        price: 250000,
+        children: [
+            { id: 'aceh-11', name: 'Kab. Simeulue', price: 50000 },
+            { id: 'aceh-12', name: 'Kab. Aceh Singkil', price: 50000 },
+            { id: 'aceh-13', name: 'Kab. Aceh Selatan', price: 50000 },
+            { id: 'aceh-14', name: 'Kab. Aceh Tenggara', price: 50000 },
+            { id: 'aceh-15', name: 'Kab. Aceh Timur', price: 50000 },
+            { id: 'aceh-16', name: 'Kab. Aceh Tengah', price: 50000 },
+            { id: 'aceh-17', name: 'Kab. Aceh Barat', price: 50000 },
+            { id: 'aceh-18', name: 'Kab. Aceh Besar', price: 50000 },
+            { id: 'aceh-19', name: 'Kab. Pidie', price: 50000 },
+            { id: 'aceh-71', name: 'Kota Banda Aceh', price: 50000 }
+        ]
+    }
+];
+
+const variables = [
+    { id: 'v1', name: 'ID Unik Rumah Tangga', code: 'ID_RUTA', price: 100000 },
+    { id: 'v2', name: 'No Urut Anggota Rumah Tangga', code: 'R301', price: 80000 },
+    { id: 'v3', name: 'Weight Rumah Tangga', code: 'WR', price: 90000 },
+    { id: 'v4', name: 'Weight Individu', code: 'WI', price: 90000 },
+    { id: 'v5', name: 'Klasifikasi', code: 'KLASIFIKAS', price: 70000 },
+    { id: 'v6', name: 'Jumlah ART', code: 'JML_ART', price: 60000 }
+];
+
+function initializeDataSelectionModal() {
+    const dataTypeRadios = document.querySelectorAll('input[name="dataType"]');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const closeBtn = document.getElementById('closeDataSelectionModal');
+    const cancelBtn = document.getElementById('cancelDataSelection');
+    const confirmBtn = document.getElementById('confirmDataSelection');
+    const calculatePriceBtn = document.getElementById('calculatePrice');
+    
+    // Toggle between full and non-full
+    dataTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'nonfull') {
+                step2.classList.remove('hidden');
+                renderRegions();
+                renderVariables();
+                // Hide price result when switching
+                document.getElementById('priceResult').classList.add('hidden');
+            } else {
+                step2.classList.add('hidden');
+                selectedRegions = [];
+                selectedVariables = [];
+            }
+        });
+    });
+    
+    // Close modal
+    closeBtn.addEventListener('click', closeDataSelectionModal);
+    cancelBtn.addEventListener('click', closeDataSelectionModal);
+    
+    // Confirm selection
+    confirmBtn.addEventListener('click', confirmDataSelection);
+    
+    // Calculate price button
+    calculatePriceBtn.addEventListener('click', () => {
+        if (selectedRegions.length === 0 || selectedVariables.length === 0) {
+            showNotification('Pilih minimal 1 wilayah dan 1 variabel', 'info');
+            return;
+        }
+        updateCustomPrice();
+        document.getElementById('priceResult').classList.remove('hidden');
+        showNotification('Harga berhasil dihitung', 'success');
+    });
+    
+    // Region search
+    document.getElementById('regionSearch').addEventListener('input', (e) => {
+        filterRegions(e.target.value);
+    });
+    
+    // Variable search
+    document.getElementById('variableSearch').addEventListener('input', (e) => {
+        filterVariables(e.target.value);
+    });
+    
+    // Select/Unselect all buttons
+    document.getElementById('selectAllRegions').addEventListener('click', () => {
+        selectedRegions = regions.map(r => r.id);
+        renderRegions();
+        document.getElementById('priceResult').classList.add('hidden');
+    });
+    
+    document.getElementById('unselectAllRegions').addEventListener('click', () => {
+        selectedRegions = [];
+        renderRegions();
+        document.getElementById('priceResult').classList.add('hidden');
+    });
+    
+    document.getElementById('selectAllVariables').addEventListener('click', () => {
+        selectedVariables = variables.map(v => v.id);
+        renderVariables();
+        document.getElementById('priceResult').classList.add('hidden');
+    });
+    
+    document.getElementById('unselectAllVariables').addEventListener('click', () => {
+        selectedVariables = [];
+        renderVariables();
+        document.getElementById('priceResult').classList.add('hidden');
+    });
+}
+
+function openDataSelectionModal(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product || product.type !== 'microdata') {
+        // Jika bukan microdata, langsung tambah ke cart
+        addToCartDirect(productId);
+        return;
+    }
+    
+    currentProductForSelection = productId;
+    selectedRegions = [];
+    selectedVariables = [];
+    
+    const modal = document.getElementById('dataSelectionModal');
+    const title = document.getElementById('modalProductTitle');
+    const fullPrice = document.getElementById('fullPrice');
+    
+    title.textContent = product.title;
+    fullPrice.textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+    
+    // Reset to step 1
+    document.querySelector('input[name="dataType"][value="full"]').checked = true;
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('priceResult').classList.add('hidden');
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => lucide.createIcons(), 100);
+}
+
+function closeDataSelectionModal() {
+    const modal = document.getElementById('dataSelectionModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+    currentProductForSelection = null;
+    selectedRegions = [];
+    selectedVariables = [];
+}
+
+function renderRegions() {
+    const container = document.getElementById('regionList');
+    const count = document.getElementById('selectedRegionCount');
+    
+    count.textContent = selectedRegions.length;
+    
+    container.innerHTML = regions.map(region => {
+        const isParentSelected = selectedRegions.includes(region.id);
+        const hasChildren = region.children && region.children.length > 0;
+        
+        let html = `
+            <div class="space-y-2">
+                <label class="flex items-center gap-3 p-3 border-2 border-gray-300 rounded-lg hover:bg-white cursor-pointer transition-colors font-semibold ${isParentSelected ? 'bg-blue-50 border-blue-400' : 'bg-gray-50'}">
+                    <input 
+                        type="checkbox" 
+                        value="${region.id}"
+                        ${isParentSelected ? 'checked' : ''}
+                        onchange="toggleRegion('${region.id}')"
+                        class="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                    >
+                    <span class="flex-1 text-sm font-bold text-gray-900">${region.name}</span>
+                </label>
+        `;
+        
+        // Render children if parent is selected
+        if (hasChildren && isParentSelected) {
+            html += `<div class="ml-8 space-y-2 border-l-2 border-blue-200 pl-4">`;
+            region.children.forEach(child => {
+                const isChildSelected = selectedRegions.includes(child.id);
+                html += `
+                    <label class="flex items-center gap-3 p-2 border border-gray-200 rounded-lg hover:bg-white cursor-pointer transition-colors ${isChildSelected ? 'bg-blue-50 border-blue-300' : 'bg-white'}">
+                        <input 
+                            type="checkbox" 
+                            value="${child.id}"
+                            ${isChildSelected ? 'checked' : ''}
+                            onchange="toggleRegion('${child.id}')"
+                            class="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                        >
+                        <span class="flex-1 text-sm text-gray-900">${child.name}</span>
+                    </label>
+                `;
+            });
+            html += `</div>`;
+        }
+        
+        html += `</div>`;
+        return html;
+    }).join('');
+}
+
+function renderVariables() {
+    const container = document.getElementById('variableList');
+    const count = document.getElementById('selectedVariableCount');
+    
+    count.textContent = selectedVariables.length;
+    
+    container.innerHTML = variables.map(variable => {
+        const isSelected = selectedVariables.includes(variable.id);
+        return `
+            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-white cursor-pointer transition-colors ${isSelected ? 'bg-blue-50 border-blue-300' : 'bg-white'}">
+                <input 
+                    type="checkbox" 
+                    value="${variable.id}"
+                    ${isSelected ? 'checked' : ''}
+                    onchange="toggleVariable('${variable.id}')"
+                    class="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                >
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">${variable.name}</p>
+                    <p class="text-xs text-gray-500">${variable.code}</p>
+                </div>
+            </label>
+        `;
+    }).join('');
+}
+
+function toggleRegion(regionId) {
+    const index = selectedRegions.indexOf(regionId);
+    if (index > -1) {
+        selectedRegions.splice(index, 1);
+    } else {
+        selectedRegions.push(regionId);
+    }
+    renderRegions();
+    // Hide price result when selection changes
+    document.getElementById('priceResult').classList.add('hidden');
+}
+
+function toggleVariable(variableId) {
+    const index = selectedVariables.indexOf(variableId);
+    if (index > -1) {
+        selectedVariables.splice(index, 1);
+    } else {
+        selectedVariables.push(variableId);
+    }
+    renderVariables();
+    // Hide price result when selection changes
+    document.getElementById('priceResult').classList.add('hidden');
+}
+
+function filterRegions(searchTerm) {
+    const items = document.querySelectorAll('#regionList label');
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(searchTerm.toLowerCase()) ? 'flex' : 'none';
+    });
+}
+
+function filterVariables(searchTerm) {
+    const items = document.querySelectorAll('#variableList label');
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(searchTerm.toLowerCase()) ? 'flex' : 'none';
+    });
+}
+
+function updateCustomPrice() {
+    let regionTotal = 0;
+    
+    selectedRegions.forEach(id => {
+        // Check if it's a parent region
+        const parentRegion = regions.find(r => r.id === id);
+        if (parentRegion) {
+            regionTotal += parentRegion.price;
+        } else {
+            // Check if it's a child region
+            regions.forEach(parent => {
+                if (parent.children) {
+                    const child = parent.children.find(c => c.id === id);
+                    if (child) {
+                        regionTotal += child.price;
+                    }
+                }
+            });
+        }
+    });
+    
+    const variableTotal = selectedVariables.reduce((sum, id) => {
+        const variable = variables.find(v => v.id === id);
+        return sum + (variable ? variable.price : 0);
+    }, 0);
+    
+    const total = regionTotal + variableTotal;
+    document.getElementById('customPrice').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+}
+
+function confirmDataSelection() {
+    const dataType = document.querySelector('input[name="dataType"]:checked').value;
+    const product = products.find(p => p.id === currentProductForSelection);
+    
+    if (!product) return;
+    
+    let cartItem;
+    
+    if (dataType === 'full') {
+        // Full data set
+        cartItem = {
+            id: currentProductForSelection,
+            title: product.title,
+            price: product.price,
+            type: product.type,
+            dataType: 'full'
+        };
+    } else {
+        // Non-full data set
+        if (selectedRegions.length === 0 || selectedVariables.length === 0) {
+            showNotification('Pilih minimal 1 wilayah dan 1 variabel', 'info');
+            return;
+        }
+        
+        let regionTotal = 0;
+        const regionNames = [];
+        
+        selectedRegions.forEach(id => {
+            const parentRegion = regions.find(r => r.id === id);
+            if (parentRegion) {
+                regionTotal += parentRegion.price;
+                regionNames.push(parentRegion.name);
+            } else {
+                regions.forEach(parent => {
+                    if (parent.children) {
+                        const child = parent.children.find(c => c.id === id);
+                        if (child) {
+                            regionTotal += child.price;
+                            regionNames.push(child.name);
+                        }
+                    }
+                });
+            }
+        });
+        
+        const variableTotal = selectedVariables.reduce((sum, id) => {
+            const variable = variables.find(v => v.id === id);
+            return sum + (variable ? variable.price : 0);
+        }, 0);
+        
+        cartItem = {
+            id: currentProductForSelection,
+            title: product.title,
+            price: regionTotal + variableTotal,
+            type: product.type,
+            dataType: 'custom',
+            regions: regionNames,
+            variables: selectedVariables.map(id => variables.find(v => v.id === id).name),
+            selectedRegionIds: [...selectedRegions],
+            selectedVariableIds: [...selectedVariables]
+        };
+    }
+    
+    cart.push(cartItem);
+    saveCart();
+    updateCartUI();
+    closeDataSelectionModal();
+    showNotification(`${product.title} ditambahkan ke keranjang`, 'success');
+}
+
+function addToCartDirect(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    
+    const cartItem = {
+        id: productId,
+        title: product.title,
+        price: product.price,
+        type: product.type,
+        dataType: 'full'
+    };
+    
+    cart.push(cartItem);
+    saveCart();
+    updateCartUI();
+    showNotification(`${product.title} ditambahkan ke keranjang`, 'success');
+}
+
+// Update addToCart function to open modal for microdata
+window.addToCart = function(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    
+    if (product.type === 'microdata' && !product.isFree) {
+        openDataSelectionModal(productId);
+    } else {
+        addToCartDirect(productId);
+    }
+};
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function() {
+    loadCart();
+    renderProducts(products);
+    initializeFilters();
+    initializeViewToggle();
+    initializeCart();
+    initializeDataSelectionModal();
+    updateResultCount(products.length);
+});
