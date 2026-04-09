@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk - Silastik BPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        :root { --navy-bps: #001F4F; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .tab-btn { color: #6b7280; transition: all .2s; border-bottom: 2px solid transparent; }
+        .tab-btn.active { color: #2563eb; border-bottom: 2px solid #2563eb; background: transparent; }
+        .tab-btn:not(.active):hover { color: #374151; background: #f9fafb; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-[#001F4F] shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="silastik.png" alt="Silastik BPS" class="h-12">
+                    <div class="leading-none">
+                        <div class="font-bold text-lg text-white mb-0.5">Silastik</div>
+                        <div class="text-xs text-blue-200">Sistem Informasi Layanan Statistik</div>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-blue-100 hover:text-blue-200 transition-colors">Beranda</a>
+                    <a href="katalog.html" class="text-white font-semibold hover:text-blue-200 transition-colors">Katalog</a>
+                    <div class="relative group">
+                        <button class="text-blue-100 hover:text-blue-200 transition-colors flex items-center gap-1">Layanan <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-screen max-w-4xl bg-white rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="p-8 grid grid-cols-3 gap-8">
+                                <div>
+                                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Informasi</h3>
+                                    <div class="space-y-3">
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover/item:bg-blue-200"><i data-lucide="info" class="w-5 h-5 text-blue-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Tentang Kami</p><p class="text-xs text-gray-500">Profil dan visi misi</p></div></a>
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center group-hover/item:bg-emerald-200"><i data-lucide="newspaper" class="w-5 h-5 text-emerald-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Berita Kami</p><p class="text-xs text-gray-500">Update terbaru</p></div></a>
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover/item:bg-orange-200"><i data-lucide="briefcase" class="w-5 h-5 text-orange-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Layanan Kami</p><p class="text-xs text-gray-500">Produk & layanan</p></div></a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Kontak & Bantuan</h3>
+                                    <div class="space-y-3">
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover/item:bg-blue-200"><i data-lucide="phone" class="w-5 h-5 text-blue-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Kontak Kami</p><p class="text-xs text-gray-500">Hubungi tim kami</p></div></a>
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center group-hover/item:bg-red-200"><i data-lucide="alert-circle" class="w-5 h-5 text-red-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Pengaduan</p><p class="text-xs text-gray-500">Sampaikan keluhan</p></div></a>
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover/item:bg-purple-200"><i data-lucide="help-circle" class="w-5 h-5 text-purple-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">FAQ</p><p class="text-xs text-gray-500">Pertanyaan umum</p></div></a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Panduan & Kebijakan</h3>
+                                    <div class="space-y-3">
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center group-hover/item:bg-emerald-200"><i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Panduan</p><p class="text-xs text-gray-500">Cara penggunaan</p></div></a>
+                                        <a href="#" class="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"><div class="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover/item:bg-orange-200"><i data-lucide="file-text" class="w-5 h-5 text-orange-600"></i></div><div><p class="font-semibold text-gray-900 mb-0.5">Syarat & Ketentuan</p><p class="text-xs text-gray-500">Aturan penggunaan</p></div></a>
+                                    </div>
+                                    <div class="mt-6 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4">
+                                        <p class="text-white font-semibold text-sm mb-2">Butuh Konsultasi?</p>
+                                        <p class="text-blue-100 text-xs mb-3">Tim kami siap membantu Anda</p>
+                                        <a href="#" class="inline-flex items-center gap-1 text-white text-xs font-semibold hover:gap-2 transition-all">Konsultasi Sekarang <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-3">
+                    <button class="text-white hover:text-blue-200 px-4 py-2 rounded-lg hover:bg-white/10 transition-all">Masuk</button>
+                    <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-md">Daftar</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-[#001F4F] via-[#002966] to-[#001F4F] text-white relative overflow-hidden pb-8">
+        <div class="absolute inset-0 opacity-5">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
+        </div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-10 -right-10 w-40 h-40 border-4 border-emerald-500/20 rounded-full"></div>
+            <div class="absolute top-20 right-32 w-3 h-3 bg-emerald-400 rounded-full opacity-40 animate-pulse"></div>
+            <div class="absolute top-1/2 left-1/4 w-2 h-2 bg-blue-300 rounded-full opacity-40 animate-pulse"></div>
+        </div>
+        <div class="container mx-auto px-4 py-12 relative z-10">
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-2 text-sm text-blue-200 mb-5">
+                <a href="index.html" class="hover:text-white transition-colors">Beranda</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <a href="katalog.html" class="hover:text-white transition-colors">Katalog</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span id="breadcrumbTitle" class="text-white font-medium">Detail Produk</span>
+            </div>
+            <!-- Product Header -->
+            <div class="flex flex-col lg:flex-row gap-8 items-start">
+                <div id="productImage" class="w-full lg:w-56 h-40 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="database" class="w-16 h-16 text-white/50"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span id="productBadge" class="text-xs font-semibold px-2.5 py-1 bg-white/10 text-white rounded-full border border-white/20">Data Mikro</span>
+                        <span id="productYear" class="text-xs text-blue-200 flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> 2020</span>
+                    </div>
+                    <h1 id="productTitle" class="text-2xl md:text-3xl font-bold text-white mb-3">Judul Produk</h1>
+                    <p id="productDesc" class="text-blue-100 mb-6 leading-relaxed max-w-2xl">Deskripsi produk.</p>
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <div>
+                            <p class="text-xs text-blue-300 mb-0.5">Harga Fullset</p>
+                            <p id="productPrice" class="text-2xl font-bold text-white">Rp 0</p>
+                        </div>
+                        <button onclick="addToCartFromDetail()" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-400 hover:to-emerald-500 transition-all font-semibold shadow-md">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            Tambah ke Keranjang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Bar -->
+    <div class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex overflow-x-auto" style="scrollbar-width:none">
+                <button onclick="switchTab('detil')" class="tab-btn active flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="detil"><i data-lucide="info" class="w-4 h-4"></i>Detil</button>
+                <button onclick="switchTab('kamus')" class="tab-btn flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="kamus"><i data-lucide="list" class="w-4 h-4"></i>Kamus Data</button>
+                <button onclick="switchTab('contoh')" class="tab-btn flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="contoh"><i data-lucide="table" class="w-4 h-4"></i>Contoh Data</button>
+                <button onclick="switchTab('kuesioner')" class="tab-btn flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="kuesioner"><i data-lucide="file-text" class="w-4 h-4"></i>Kuesioner</button>
+                <button onclick="switchTab('tautan')" class="tab-btn flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="tautan"><i data-lucide="external-link" class="w-4 h-4"></i>Tautan Luar</button>
+                <button onclick="switchTab('persyaratan')" class="tab-btn flex items-center gap-2 px-5 py-4 text-sm font-semibold whitespace-nowrap" data-tab="persyaratan"><i data-lucide="shield-check" class="w-4 h-4"></i>Persyaratan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl">
+
+                <!-- Detil -->
+                <div id="tab-detil" class="tab-content active bg-white rounded-xl shadow-sm overflow-hidden">
+                    <table class="w-full text-sm"><tbody id="detilTable"></tbody></table>
+                </div>
+
+                <!-- Kamus Data -->
+                <div id="tab-kamus" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-gray-900">Kamus Data</h3>
+                            <div class="relative">
+                                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="kamusSearch" placeholder="Cari variabel..." oninput="filterKamus()" class="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead><tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="text-left px-4 py-3 font-semibold text-gray-700 w-12">No</th>
+                                    <th class="text-left px-4 py-3 font-semibold text-gray-700">Variabel</th>
+                                    <th class="text-left px-4 py-3 font-semibold text-gray-700">Label</th>
+                                    <th class="text-left px-4 py-3 font-semibold text-gray-700">Tipe Data</th>
+                                </tr></thead>
+                                <tbody id="kamusTable"></tbody>
+                            </table>
+                        </div>
+                        <div id="kamusPagination" class="flex items-center justify-between mt-4 text-sm text-gray-500"></div>
+                    </div>
+                </div>
+
+                <!-- Contoh Data -->
+                <div id="tab-contoh" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2"><i data-lucide="link" class="w-4 h-4 text-blue-600"></i>Contoh Data Mikro</h3>
+                        <div id="contohList" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <!-- Kuesioner -->
+                <div id="tab-kuesioner" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2"><i data-lucide="link" class="w-4 h-4 text-blue-600"></i>Unduh Dokumen</h3>
+                        <div id="kuesionerList" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <!-- Tautan Luar -->
+                <div id="tab-tautan" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <p class="text-sm text-gray-500">Tidak ditemukan</p>
+                    </div>
+                </div>
+
+                <!-- Persyaratan -->
+                <div id="tab-persyaratan" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div id="persyaratanContent" class="text-sm text-gray-700 leading-relaxed"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 mt-8">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="silastik.png" alt="Silastik BPS" class="h-10 mb-3">
+                    <h3 class="font-bold text-white mb-2">Silastik</h3>
+                    <p class="text-sm text-gray-400">Platform resmi BPS untuk akses microdata dan publikasi statistik Indonesia</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Layanan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Layanan Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Kontak Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pengaduan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Bantuan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Panduan</a></li>
+                        <li><a href="katalog.html" class="hover:text-white transition-colors">Katalog Data</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Hubungi Kami</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 flex-shrink-0"></i><span>Jl. Dr. Sutomo No. 6-8, Jakarta Pusat 10710</span></li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 flex-shrink-0"></i><span>(021) 3841195</span></li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 flex-shrink-0"></i><span>pst@bps.go.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                <p>&copy; 2024 Badan Pusat Statistik. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition-colors">Syarat Layanan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="katalog.js"></script>
+    <script>
+    const levelLabels = { national:'Nasional', province:'Provinsi', city:'Kota/Kabupaten', village:'Desa/Kelurahan' };
+    const sampleKamus = [
+        {var:'ID_RUTA',label:'ID UNIK RUMAH TANGGA',tipe:'numeric'},
+        {var:'JML_ART',label:'JUMLAH ANGGOTA RUMAH TANGGA',tipe:'numeric'},
+        {var:'KABUPATEN',label:'KABUPATEN KOTA',tipe:'character'},
+        {var:'KLASIFIKAS',label:'KLASIFIKASI PERKOTAAN/PERDESAAN',tipe:'character'},
+        {var:'PROVINSI',label:'PROVINSI',tipe:'character'},
+        {var:'PSU',label:'IDENTITAS UNIK BLOK SENSUS SAMPEL',tipe:'character'},
+        {var:'R301',label:'NO URUT ANGGOTA RUMAH TANGGA',tipe:'numeric'},
+        {var:'R303',label:'HUBUNGAN DENGAN KEPALA RUMAH TANGGA',tipe:'numeric'},
+        {var:'R304',label:'JENIS KELAMIN',tipe:'numeric'},
+        {var:'R305A',label:'TANGGAL LAHIR',tipe:'numeric'},
+        {var:'R305B',label:'BULAN LAHIR',tipe:'numeric'},
+        {var:'R305C',label:'TAHUN LAHIR',tipe:'numeric'},
+    ];
+    let kamusPage=1, kamusPerPage=10, kamusFiltered=[...sampleKamus];
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+        document.getElementById(`tab-${tab}`).classList.add('active');
+    }
+    function filterKamus() {
+        const q=document.getElementById('kamusSearch').value.toLowerCase();
+        kamusFiltered=sampleKamus.filter(k=>k.var.toLowerCase().includes(q)||k.label.toLowerCase().includes(q));
+        kamusPage=1; renderKamus();
+    }
+    function renderKamus() {
+        const start=(kamusPage-1)*kamusPerPage, slice=kamusFiltered.slice(start,start+kamusPerPage);
+        document.getElementById('kamusTable').innerHTML=slice.map((k,i)=>`
+            <tr class="${i%2===0?'bg-white':'bg-gray-50'} border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                <td class="px-4 py-3 text-gray-500">${start+i+1}</td>
+                <td class="px-4 py-3 font-mono font-semibold text-blue-700">${k.var}</td>
+                <td class="px-4 py-3 text-gray-700">${k.label}</td>
+                <td class="px-4 py-3 text-gray-500">${k.tipe}</td>
+            </tr>`).join('');
+        const total=kamusFiltered.length, totalPages=Math.ceil(total/kamusPerPage);
+        document.getElementById('kamusPagination').innerHTML=`
+            <span>Showing ${start+1} to ${Math.min(start+kamusPerPage,total)} of ${total} entries</span>
+            <div class="flex gap-1">${Array.from({length:totalPages},(_,i)=>`
+                <button onclick="kamusPage=${i+1};renderKamus()" class="w-8 h-8 rounded text-sm font-medium ${kamusPage===i+1?'bg-blue-600 text-white':'bg-gray-100 text-gray-600 hover:bg-gray-200'}">${i+1}</button>`).join('')}</div>`;
+    }
+    function addToCartFromDetail() {
+        const id=new URLSearchParams(window.location.search).get('id');
+        if(id&&window.addToCart) window.addToCart(id);
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+        lucide.createIcons();
+        const id=new URLSearchParams(window.location.search).get('id');
+        const product=products.find(p=>p.id===id);
+        if(!product){document.getElementById('productTitle').textContent='Produk tidak ditemukan';return;}
+        document.title=`${product.title} - Silastik BPS`;
+        document.getElementById('breadcrumbTitle').textContent=product.title;
+        document.getElementById('productTitle').textContent=product.title;
+        document.getElementById('productDesc').textContent=product.description;
+        document.getElementById('productYear').innerHTML=`<i data-lucide="calendar" class="w-3.5 h-3.5 inline mr-1"></i>${product.years}`;
+        document.getElementById('productPrice').textContent=product.isFree?'Gratis':`Rp ${product.price.toLocaleString('id-ID')}`;
+        document.getElementById('productBadge').textContent=product.badge;
+        const icons={microdata:'database',publication:'book-open',map:'map'};
+        document.getElementById('productImage').innerHTML=`<i data-lucide="${icons[product.type]||'database'}" class="w-16 h-16 text-white/50"></i>`;
+        const rows=[
+            ['Nama',product.title],['Tahun',product.years],
+            ['Harga',product.isFree?'Gratis':`Rp ${product.price.toLocaleString('id-ID')}`],
+            ['Level Penyajian',levelLabels[product.level]||'Nasional'],
+            ['Format File',product.format||(product.type==='microdata'?'.DBF Data Base File':'PDF')],
+            ['Jenis Kegiatan',product.type==='microdata'?'Survei':product.type==='publication'?'Publikasi':'Peta Digital'],
+            ['Keterangan',product.description],
+        ];
+        document.getElementById('detilTable').innerHTML=rows.map((r,i)=>`
+            <tr class="${i%2===0?'bg-white':'bg-gray-50'} border-b border-gray-100">
+                <td class="px-6 py-3.5 font-semibold text-gray-700 w-44 align-top">${r[0]}</td>
+                <td class="px-6 py-3.5 text-gray-700">${r[1]}</td>
+            </tr>`).join('');
+        renderKamus();
+        if(product.type==='microdata'){
+            const parts=['b4_part1','b4_part2','b4_part3','b5','b6','b7','keluarga'];
+            document.getElementById('contohList').innerHTML=parts.map(p=>`
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">
+                        <span>${p}</span><i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                    <div class="hidden px-4 py-3 border-t border-gray-200">
+                        <a href="#" class="flex items-center gap-2 text-blue-600 hover:underline text-sm"><i data-lucide="download" class="w-4 h-4"></i>${p}</a>
+                    </div>
+                </div>`).join('');
+            const docs=['Penjelasan','Kuesioner','Layout'];
+            document.getElementById('kuesionerList').innerHTML=docs.map((d,i)=>`
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700">
+                        <span>${d}</span><i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                    <div class="${i===1?'':'hidden'} px-4 py-3 border-t border-gray-200">
+                        <a href="#" class="flex items-center gap-2 text-blue-600 hover:underline text-sm"><i data-lucide="download" class="w-4 h-4"></i>${d.toLowerCase()}_${product.id}</a>
+                    </div>
+                </div>`).join('');
+        } else {
+            document.getElementById('contohList').innerHTML='<p class="text-sm text-gray-500">Tidak tersedia untuk tipe produk ini.</p>';
+            document.getElementById('kuesionerList').innerHTML='<p class="text-sm text-gray-500">Tidak tersedia untuk tipe produk ini.</p>';
+        }
+        document.getElementById('persyaratanContent').innerHTML=`
+            <p class="font-semibold mb-3">Persyaratan Pembelian ${product.badge} :</p>
+            <ol class="list-decimal ml-5 space-y-1 mb-4">
+                <li>Melampirkan abstraksi terkait penggunaan data</li>
+                <li>Menandatangani Surat Perjanjian Penggunaan Data (SPPD)</li>
+                <li>Membayar biaya diseminasi dari ${product.badge}</li>
+            </ol>
+            <p>Aturan mengenai diseminasi tertuang dalam Peraturan Pemerintah Nomor 13 Tahun 2024 Tentang Jenis Dan Tarif Atas Jenis Penerimaan Negara Bukan Pajak yang berlaku pada Badan Pusat Statistik.</p>`;
+        lucide.createIcons();
+    });
+    </script>
+</body>
+</html>

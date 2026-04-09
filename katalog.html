@@ -33,6 +33,32 @@
         .animate-float {
             animation: float 6s ease-in-out infinite;
         }
+
+        /* Dual range slider */
+        .year-slider {
+            pointer-events: none;
+        }
+        .year-slider::-webkit-slider-thumb {
+            pointer-events: all;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #2563eb;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        .year-slider::-moz-range-thumb {
+            pointer-events: all;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #2563eb;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -242,136 +268,290 @@
     <!-- Main Content -->
     <section class="py-8 -mt-20 relative z-20">
         <div class="container mx-auto px-4">
-            
-            <div class="flex gap-6">
+
+            <!-- Navigation Card (Katalog > Kategori > Sub Kategori) -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
                 
-                <!-- Sidebar Filter -->
-                <aside class="w-80 flex-shrink-0 hidden lg:block">
-                    <div class="bg-white rounded-xl shadow-sm p-6 sticky top-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                            <i data-lucide="sliders-horizontal" class="w-5 h-5 text-blue-600"></i>
-                            Filter & Pencarian
-                        </h2>
-                        
-                        <!-- Search -->
-                        <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Cari Produk</label>
-                            <div class="relative">
-                                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                <input 
-                                    type="text" 
-                                    id="searchInput"
-                                    placeholder="Cari berdasarkan judul..." 
-                                    class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                >
+                <!-- Breadcrumb -->
+                <div id="navBreadcrumb" class="flex items-center gap-2 text-sm mb-5 hidden">
+                    <!-- rendered by JS -->
+                </div>
+
+                <!-- Step: Pilih Katalog -->
+                <div id="stepKatalog">
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Pilih Katalog</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="selectCatalog('microdata')" id="cat-microdata"
+                            class="catalog-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+                                    <i data-lucide="database" class="w-5 h-5 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-gray-900 text-sm">Data Mikro</p>
+                                    <p class="text-xs text-gray-500">Survei & sensus BPS</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-blue-500"></i>
                             </div>
-                        </div>
-                        
-                        <!-- Category Filter -->
-                        <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">Kategori</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="category" value="" class="w-4 h-4 text-blue-600" checked>
-                                    <span class="text-sm text-gray-700">Semua Kategori</span>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="category" value="microdata" class="w-4 h-4 text-blue-600">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                        <span class="text-sm text-gray-700">Data Mikro</span>
-                                    </div>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="category" value="publication" class="w-4 h-4 text-blue-600">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2 h-2 bg-emerald-600 rounded-full"></div>
-                                        <span class="text-sm text-gray-700">Publikasi Elektronik</span>
-                                    </div>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="category" value="map" class="w-4 h-4 text-blue-600">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
-                                        <span class="text-sm text-gray-700">Peta Digital</span>
-                                    </div>
-                                </label>
+                        </button>
+                        <button onclick="selectCatalog('publication')" id="cat-publication"
+                            class="catalog-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+                                    <i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-gray-900 text-sm">Publikasi Elektronik</p>
+                                    <p class="text-xs text-gray-500">Publikasi resmi BPS</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-emerald-500"></i>
                             </div>
-                        </div>
-                        
-                        <!-- Level Filter -->
-                        <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">Level Penyajian</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="level" value="" class="w-4 h-4 text-blue-600" checked>
-                                    <span class="text-sm text-gray-700">Semua Level</span>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="level" value="national" class="w-4 h-4 text-blue-600">
-                                    <span class="text-sm text-gray-700">Nasional</span>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="level" value="province" class="w-4 h-4 text-blue-600">
-                                    <span class="text-sm text-gray-700">Provinsi</span>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="level" value="city" class="w-4 h-4 text-blue-600">
-                                    <span class="text-sm text-gray-700">Kota/Kabupaten</span>
-                                </label>
-                                <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                                    <input type="radio" name="level" value="village" class="w-4 h-4 text-blue-600">
-                                    <span class="text-sm text-gray-700">Desa/Kelurahan</span>
-                                </label>
+                        </button>
+                        <button onclick="selectCatalog('map')" id="cat-map"
+                            class="catalog-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+                                    <i data-lucide="map" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-gray-900 text-sm">Peta Wilkerstat</p>
+                                    <p class="text-xs text-gray-500">Peta digital SHP</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-orange-500"></i>
                             </div>
-                        </div>
-                        
-                        <!-- Reset Button -->
-                        <button id="resetFilters" class="w-full py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium flex items-center justify-center gap-2">
-                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                            Reset Filter
                         </button>
                     </div>
-                </aside>
-                
-                <!-- Main Content Area -->
-                <div class="flex-1 min-w-0">
+                </div>
+
+                <!-- Step: Pilih Kategori (muncul di bawah katalog, Data Mikro only) -->
+                <div id="stepKategori" class="hidden">
+                    <div class="border-t border-gray-100 mt-5 pt-5">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Pilih Kategori</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <button onclick="selectKategori('sosial')" id="kat-sosial"
+                                class="kategori-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 text-sm">Statistik Sosial</p>
+                                        <p class="text-xs text-gray-500">10 sub kategori</p>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-blue-500"></i>
+                                </div>
+                            </button>
+                            <button onclick="selectKategori('ekonomi')" id="kat-ekonomi"
+                                class="kategori-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i data-lucide="trending-up" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 text-sm">Statistik Ekonomi</p>
+                                        <p class="text-xs text-gray-500">10 sub kategori</p>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-blue-500"></i>
+                                </div>
+                            </button>
+                            <button onclick="selectKategori('lainnya')" id="kat-lainnya"
+                                class="kategori-btn group text-left p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i data-lucide="layers" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 text-sm">Lainnya</p>
+                                        <p class="text-xs text-gray-500">1 sub kategori</p>
+                                    </div>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-blue-500"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step: Pilih Sub Kategori (muncul di bawah kategori) -->
+                <div id="stepSubKategori" class="hidden">
+                    <div class="border-t border-gray-100 mt-5 pt-5">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Pilih Sub Kategori</p>
+                        <div id="subKategoriList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                            <!-- rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Products Section (hidden until sub kategori selected) -->
+            <div id="productsSection" class="hidden">
+                <div class="flex gap-6">
                     
-                    <!-- Top Bar -->
-                    <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
-                        <div class="flex items-center justify-between">
-                            <div>
+                    <!-- Sidebar Filter -->
+                    <aside class="w-72 flex-shrink-0 hidden lg:block">
+                        <div class="bg-white rounded-xl shadow-sm p-6 sticky top-6">
+                            <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="sliders-horizontal" class="w-4 h-4 text-blue-600"></i>
+                                Filter & Pencarian
+                            </h2>
+                            
+                            <!-- Search (always visible) -->
+                            <div class="mb-5">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Cari</label>
+                                <div class="relative">
+                                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="searchInput" placeholder="Cari berdasarkan judul..."
+                                        class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Data Mikro filters -->
+                            <div id="microdataFilters" class="hidden space-y-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Level Penyajian</label>
+                                    <select id="filterLevel" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                        <option value="">Semua Level</option>
+                                        <option value="national">Nasional</option>
+                                        <option value="province">Provinsi</option>
+                                        <option value="city">Kota/Kabupaten</option>
+                                        <option value="village">Desa/Kelurahan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="text-sm font-semibold text-gray-700">Tahun</label>
+                                        <span id="yearRangeLabel" class="text-xs font-semibold text-blue-600">2000 — 2026</span>
+                                    </div>
+                                    <div class="relative pt-1" id="yearSliderWrapper">
+                                        <div class="relative h-1 bg-gray-200 rounded-full mb-4">
+                                            <div id="yearTrack" class="absolute h-1 bg-blue-500 rounded-full"></div>
+                                        </div>
+                                        <input type="range" id="yearFrom" min="2000" max="2026" value="2000" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                        <input type="range" id="yearTo" min="2000" max="2026" value="2026" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-400 mt-6">
+                                        <span>2000</span><span>2026</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Publikasi filters -->
+                            <div id="publicationFilters" class="hidden space-y-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Provinsi</label>
+                                    <select id="filterProvinsi" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                        <option value="">Semua Provinsi</option>
+                                        <option value="aceh">Aceh</option>
+                                        <option value="sumut">Sumatera Utara</option>
+                                        <option value="sumbar">Sumatera Barat</option>
+                                        <option value="riau">Riau</option>
+                                        <option value="jambi">Jambi</option>
+                                        <option value="dki">DKI Jakarta</option>
+                                        <option value="jabar">Jawa Barat</option>
+                                        <option value="jateng">Jawa Tengah</option>
+                                        <option value="diy">DI Yogyakarta</option>
+                                        <option value="jatim">Jawa Timur</option>
+                                        <option value="bali">Bali</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Kabupaten/Kota</label>
+                                    <select id="filterKabupaten" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" disabled>
+                                        <option value="">Pilih provinsi dulu</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="text-sm font-semibold text-gray-700">Tahun</label>
+                                        <span id="pubYearRangeLabel" class="text-xs font-semibold text-blue-600">2000 — 2026</span>
+                                    </div>
+                                    <div class="relative pt-1" id="pubYearSliderWrapper">
+                                        <div class="relative h-1 bg-gray-200 rounded-full mb-4">
+                                            <div id="pubYearTrack" class="absolute h-1 bg-blue-500 rounded-full"></div>
+                                        </div>
+                                        <input type="range" id="pubYearFrom" min="2000" max="2026" value="2000" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                        <input type="range" id="pubYearTo" min="2000" max="2026" value="2026" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-400 mt-6">
+                                        <span>2000</span><span>2026</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Peta filters -->
+                            <div id="mapFilters" class="hidden space-y-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Level Administrasi</label>
+                                    <select id="filterMapLevel" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                                        <option value="">Semua Level</option>
+                                        <option value="province">Provinsi</option>
+                                        <option value="city">Kabupaten/Kota</option>
+                                        <option value="district">Kecamatan</option>
+                                        <option value="village">Desa/Kelurahan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="text-sm font-semibold text-gray-700">Tahun</label>
+                                        <span id="mapYearRangeLabel" class="text-xs font-semibold text-blue-600">2000 — 2026</span>
+                                    </div>
+                                    <div class="relative pt-1" id="mapYearSliderWrapper">
+                                        <div class="relative h-1 bg-gray-200 rounded-full mb-4">
+                                            <div id="mapYearTrack" class="absolute h-1 bg-blue-500 rounded-full"></div>
+                                        </div>
+                                        <input type="range" id="mapYearFrom" min="2000" max="2026" value="2000" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                        <input type="range" id="mapYearTo" min="2000" max="2026" value="2026" step="1"
+                                            class="absolute w-full h-1 appearance-none bg-transparent cursor-pointer year-slider" style="top: 4px;">
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-400 mt-6">
+                                        <span>2000</span><span>2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="resetFilters" class="w-full py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium flex items-center justify-center gap-2 mt-5">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                Reset Filter
+                            </button>
+                        </div>
+                    </aside>
+                    
+                    <!-- Main Content Area -->
+                    <div class="flex-1 min-w-0">
+                        <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                            <div class="flex items-center justify-between">
                                 <p class="text-sm text-gray-600">
                                     Menampilkan <span id="resultCount" class="font-semibold text-gray-900">0</span> produk
                                 </p>
-                            </div>
-                            
-                            <!-- View Toggle -->
-                            <div class="flex gap-2">
-                                <button id="gridViewBtn" class="p-2 border-2 bg-blue-600 border-blue-600 text-white rounded-lg transition-all">
-                                    <i data-lucide="grid-3x3" class="w-5 h-5"></i>
-                                </button>
-                                <button id="listViewBtn" class="p-2 border-2 bg-white border-gray-200 text-blue-600 rounded-lg hover:border-blue-600 transition-all">
-                                    <i data-lucide="list" class="w-5 h-5"></i>
-                                </button>
+                                <div class="flex gap-2">
+                                    <button id="gridViewBtn" class="p-2 border-2 bg-blue-600 border-blue-600 text-white rounded-lg transition-all">
+                                        <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                                    </button>
+                                    <button id="listViewBtn" class="p-2 border-2 bg-white border-gray-200 text-blue-600 rounded-lg hover:border-blue-600 transition-all">
+                                        <i data-lucide="list" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Products Grid/List -->
-                    <div id="productsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Products will be rendered here by JavaScript -->
-                    </div>
+                        <div id="productsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-                    <!-- Empty State -->
-                    <div id="emptyState" class="hidden text-center py-16">
-                        <i data-lucide="inbox" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
-                        <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada produk ditemukan</h3>
-                        <p class="text-gray-500">Coba ubah filter atau kata kunci pencarian Anda</p>
+                        <div id="emptyState" class="hidden text-center py-16">
+                            <i data-lucide="inbox" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada produk ditemukan</h3>
+                            <p class="text-gray-500">Coba ubah kata kunci pencarian Anda</p>
+                        </div>
+
+                        <!-- Spacer agar tidak terlalu mepet ke footer -->
+                        <div class="min-h-32"></div>
                     </div>
                     
                 </div>
-                
             </div>
 
         </div>
@@ -593,6 +773,68 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="silastik.png" alt="Silastik BPS" class="h-10">
+                    </div>
+                    <h3 class="font-bold text-white mb-3">Silastik</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Sistem Informasi Layanan Statistik - Platform resmi BPS untuk akses microdata dan publikasi statistik Indonesia
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Layanan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#tentang" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                        <li><a href="#berita" class="hover:text-white transition-colors">Berita Kami</a></li>
+                        <li><a href="#layanan" class="hover:text-white transition-colors">Layanan Kami</a></li>
+                        <li><a href="#kontak" class="hover:text-white transition-colors">Kontak Kami</a></li>
+                        <li><a href="#pengaduan" class="hover:text-white transition-colors">Pengaduan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Bantuan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#syarat" class="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#panduan" class="hover:text-white transition-colors">Panduan</a></li>
+                        <li><a href="katalog.html" class="hover:text-white transition-colors">Katalog Data</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Hubungi Kami</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 mt-1 flex-shrink-0"></i>
+                            <span>Jl. Dr. Sutomo No. 6-8, Jakarta Pusat 10710</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4 flex-shrink-0"></i>
+                            <span>(021) 3841195</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4 flex-shrink-0"></i>
+                            <span>pst@bps.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                    <p>&copy; 2024 Badan Pusat Statistik. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                        <a href="#" class="hover:text-white transition-colors">Syarat Layanan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="katalog.js"></script>
     <script>

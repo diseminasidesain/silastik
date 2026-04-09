@@ -577,3 +577,14 @@ function updateModalPrice() {
 function calculateCustomPrice(variables) {
     return variables.reduce((sum, v) => sum + v.price, 0);
 }
+
+// Pengumuman slider
+function slideLeft() {
+    const slider = document.getElementById('pengumumanSlider');
+    if (slider) slider.scrollBy({ left: -340, behavior: 'smooth' });
+}
+
+function slideRight() {
+    const slider = document.getElementById('pengumumanSlider');
+    if (slider) slider.scrollBy({ left: 340, behavior: 'smooth' });
+}

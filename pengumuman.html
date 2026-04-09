@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman - Silastik BPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>* { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-[#001F4F] shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="silastik.png" alt="Silastik BPS" class="h-12">
+                    <div class="leading-none">
+                        <div class="font-bold text-lg text-white mb-0.5">Silastik</div>
+                        <div class="text-xs text-blue-200">Sistem Informasi Layanan Statistik</div>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-blue-100 hover:text-white transition-colors">Beranda</a>
+                    <a href="katalog.html" class="text-blue-100 hover:text-white transition-colors">Katalog</a>
+                    <a href="pengumuman.html" class="text-white font-semibold">Pengumuman</a>
+                </div>
+                <div class="hidden md:flex items-center gap-3">
+                    <button class="text-white hover:text-blue-200 px-4 py-2 rounded-lg hover:bg-white/10 transition-all">Masuk</button>
+                    <button class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-md">Daftar</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-[#001F4F] via-[#002966] to-[#001F4F] text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-4 border border-white/20">
+                <i data-lucide="bell" class="w-4 h-4 text-emerald-300"></i>
+                <span class="text-sm font-medium">Informasi Terkini</span>
+            </div>
+            <h1 class="text-3xl font-bold mb-2">Pengumuman</h1>
+            <p class="text-blue-200">Informasi rilis data, pembaruan layanan, dan pengumuman resmi BPS</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 py-10">
+        <div id="listView" class="max-w-4xl mx-auto space-y-4">
+            <!-- rendered by JS -->
+        </div>
+        <div id="detailView" class="max-w-3xl mx-auto hidden">
+            <!-- rendered by JS -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 mt-16">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="silastik.png" alt="Silastik BPS" class="h-10 mb-3">
+                    <h3 class="font-bold text-white mb-2">Silastik</h3>
+                    <p class="text-sm text-gray-400">Platform resmi BPS untuk akses microdata dan publikasi statistik Indonesia</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Layanan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Berita Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Layanan Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Kontak Kami</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Bantuan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Panduan</a></li>
+                        <li><a href="katalog.html" class="hover:text-white transition-colors">Katalog Data</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Hubungi Kami</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 flex-shrink-0"></i><span>Jl. Dr. Sutomo No. 6-8, Jakarta Pusat 10710</span></li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 flex-shrink-0"></i><span>(021) 3841195</span></li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 flex-shrink-0"></i><span>pst@bps.go.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                <p>&copy; 2024 Badan Pusat Statistik. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition-colors">Syarat Layanan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const announcements = [
+        {
+            id: 1,
+            tag: 'Rilis Data',
+            tagColor: 'blue',
+            date: '15 Maret 2026',
+            title: 'Rilis Data Mikro Ekspor dan Impor Februari 2026',
+            summary: 'Kabar Gembira! Data mikro ekspor-impor Februari 2026 telah rilis. Data ini adalah hasil kompilasi administrasi dengan estimasi provinsi...',
+            content: `<p class="mb-4">Kabar Gembira! Data mikro ekspor-impor Februari 2026 telah rilis looh!</p>
+            <p class="mb-4">Data ini adalah data hasil kompilasi administrasi, dengan estimasi provinsi, yang dapat digunakan untuk menghitung berat dan nilai dari barang ekspor impor Indonesia menurut BTKI 2022. Kamu juga bisa melihat variabel kode pelabuhan, kode negara, dan kode hs / btki 2022 serta deskripsinya.</p>
+            <p class="mb-6">Penasaran kan isi data mikronya seperti apa? Silakan kunjungi link berikut:</p>
+            <div class="space-y-3">
+                <a href="katalog.html" class="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+                    <i data-lucide="database" class="w-5 h-5 text-blue-600 flex-shrink-0"></i>
+                    <div>
+                        <p class="font-semibold text-blue-900">Kompilasi Statistik Ekspor 2026</p>
+                        <p class="text-sm text-blue-600">Lihat di Katalog →</p>
+                    </div>
+                </a>
+                <a href="katalog.html" class="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+                    <i data-lucide="database" class="w-5 h-5 text-blue-600 flex-shrink-0"></i>
+                    <div>
+                        <p class="font-semibold text-blue-900">Kompilasi Data Statistik Impor 2026</p>
+                        <p class="text-sm text-blue-600">Lihat di Katalog →</p>
+                    </div>
+                </a>
+            </div>`
+        },
+        {
+            id: 2,
+            tag: 'Data Baru',
+            tagColor: 'green',
+            date: '1 Maret 2026',
+            title: 'Susenas Maret 2025 Kini Tersedia',
+            summary: 'Data Survei Sosial Ekonomi Nasional (Susenas) Maret 2025 telah tersedia untuk diakses.',
+            content: `<p class="mb-4">Data Survei Sosial Ekonomi Nasional (Susenas) Maret 2025 telah tersedia untuk diakses melalui Silastik.</p>
+            <p class="mb-4">Data mencakup kondisi sosial ekonomi rumah tangga seluruh Indonesia, termasuk konsumsi, pendidikan, kesehatan, dan perumahan.</p>
+            <a href="katalog.html" class="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium mt-2">
+                <i data-lucide="database" class="w-4 h-4"></i>
+                Akses Data Susenas
+            </a>`
+        },
+        {
+            id: 3,
+            tag: 'Informasi',
+            tagColor: 'orange',
+            date: '2 Januari 2026',
+            title: 'Pembaruan Tarif PNBP Data Mikro 2026',
+            summary: 'Sesuai PP Nomor 13 Tahun 2024, tarif PNBP untuk layanan data mikro BPS telah diperbarui.',
+            content: `<p class="mb-4">Sesuai PP Nomor 13 Tahun 2024, tarif Penerimaan Negara Bukan Pajak (PNBP) untuk layanan data mikro BPS telah diperbarui. Tarif baru berlaku mulai 1 Januari 2026.</p>
+            <p class="mb-4">Tarif dihitung secara regresif — semakin banyak data yang dibeli, tarif per unit semakin menurun. Hal ini bertujuan untuk mendorong pemanfaatan data statistik yang lebih luas.</p>
+            <p>Untuk informasi lebih lanjut mengenai tarif, silakan hubungi tim kami di <a href="mailto:pst@bps.go.id" class="text-blue-600 hover:underline">pst@bps.go.id</a>.</p>`
+        },
+        {
+            id: 4,
+            tag: 'Rilis Data',
+            tagColor: 'blue',
+            date: '20 Desember 2025',
+            title: 'Sakernas Agustus 2025 Telah Tersedia',
+            summary: 'Data Survei Angkatan Kerja Nasional (Sakernas) Agustus 2025 kini dapat diakses melalui Silastik.',
+            content: `<p class="mb-4">Data Survei Angkatan Kerja Nasional (Sakernas) Agustus 2025 kini dapat diakses melalui Silastik.</p>
+            <p class="mb-4">Data mencakup kondisi ketenagakerjaan seluruh Indonesia, termasuk tingkat pengangguran, jenis pekerjaan, dan jam kerja.</p>
+            <a href="katalog.html" class="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium mt-2">
+                <i data-lucide="database" class="w-4 h-4"></i>
+                Akses Data Sakernas
+            </a>`
+        },
+        {
+            id: 5,
+            tag: 'Pemeliharaan',
+            tagColor: 'purple',
+            date: '25 November 2025',
+            title: 'Jadwal Pemeliharaan Sistem Silastik',
+            summary: 'Sistem Silastik akan mengalami pemeliharaan terjadwal pada 30 November 2025 pukul 22.00–02.00 WIB.',
+            content: `<p class="mb-4">Sistem Silastik akan mengalami pemeliharaan terjadwal pada:</p>
+            <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
+                <p class="font-semibold text-orange-900">30 November 2025, pukul 22.00 – 02.00 WIB</p>
+            </div>
+            <p class="mb-4">Selama periode pemeliharaan, layanan tidak dapat diakses. Kami mohon maaf atas ketidaknyamanan ini.</p>
+            <p>Untuk pertanyaan lebih lanjut, hubungi <a href="mailto:pst@bps.go.id" class="text-blue-600 hover:underline">pst@bps.go.id</a>.</p>`
+        }
+    ];
+
+    const tagColors = {
+        blue: 'bg-blue-50 text-blue-600',
+        green: 'bg-emerald-50 text-emerald-600',
+        orange: 'bg-orange-50 text-orange-600',
+        purple: 'bg-purple-50 text-purple-600',
+    };
+
+    function renderList() {
+        const container = document.getElementById('listView');
+        container.innerHTML = announcements.map(a => `
+            <div onclick="showDetail(${a.id})" class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all p-6 cursor-pointer">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${tagColors[a.tagColor]}">
+                                ${a.tag}
+                            </span>
+                            <span class="text-xs text-gray-400 flex items-center gap-1">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                                ${a.date}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1">${a.title}</h3>
+                        <p class="text-sm text-gray-500">${a.summary}</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1"></i>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+    }
+
+    function showDetail(id) {
+        const a = announcements.find(x => x.id === id);
+        if (!a) return;
+
+        document.getElementById('listView').classList.add('hidden');
+        const detail = document.getElementById('detailView');
+        detail.classList.remove('hidden');
+        detail.innerHTML = `
+            <button onclick="showList()" class="flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors mb-6">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Kembali ke Pengumuman
+            </button>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${tagColors[a.tagColor]}">${a.tag}</span>
+                    <span class="text-xs text-gray-400 flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i>${a.date}</span>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">${a.title}</h1>
+                <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed">
+                    ${a.content}
+                </div>
+            </div>
+        `;
+        lucide.createIcons();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showList() {
+        document.getElementById('detailView').classList.add('hidden');
+        document.getElementById('listView').classList.remove('hidden');
+    }
+
+    // Check URL param
+    const urlId = new URLSearchParams(window.location.search).get('id');
+    if (urlId) {
+        renderList();
+        showDetail(parseInt(urlId));
+    } else {
+        renderList();
+    }
+    </script>
+</body>
+</html>

@@ -1,340 +1,318 @@
-// Extended Product Data for Catalog
-const products = [
-    // Popular Products - Microdata
-    {
-        id: 'md-001',
-        type: 'microdata',
-        title: 'Survei Sosial Ekonomi Nasional (Susenas) 2024',
-        description: 'Data lengkap kondisi sosial ekonomi rumah tangga Indonesia',
-        level: 'national',
-        years: '2020-2024',
-        price: 5000000,
-        isFree: false,
-        icon: 'users',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
+// =====================
+// CATALOG NAVIGATION STATE
+// =====================
+let selectedCatalog = null;
+let selectedKategori = null;
+let selectedSubKategori = null;
+
+// =====================
+// PRODUCT DATA
+// =====================
+
+// Struktur: catalog > kategori > subKategori > products[]
+const catalogData = {
+    microdata: {
+        label: 'Data Mikro',
+        icon: 'database',
+        color: 'blue',
+        kategori: {
+            sosial: {
+                label: 'Statistik Sosial',
+                icon: 'users',
+                subKategori: {
+                    'Sensus Penduduk': [
+                        { id: 'sp-01', title: 'Long Form SP2020', description: 'Data long form sensus penduduk 2020', years: '2020', price: 8000000 },
+                        { id: 'sp-02', title: 'Sensus Penduduk 2010', description: 'Data sensus penduduk 2010', years: '2010', price: 6000000 },
+                        { id: 'sp-03', title: 'Sensus Penduduk 2000', description: 'Data sensus penduduk 2000', years: '2000', price: 4000000 },
+                    ],
+                    'Survei Angkatan Kerja Nasional': [
+                        { id: 'sak-01', title: 'Sakernas Agustus 2024', description: 'Data ketenagakerjaan Agustus 2024', years: '2024', price: 4500000 },
+                        { id: 'sak-02', title: 'Sakernas Februari 2024', description: 'Data ketenagakerjaan Februari 2024', years: '2024', price: 4500000 },
+                        { id: 'sak-03', title: 'Sakernas 2023', description: 'Data ketenagakerjaan tahunan 2023', years: '2023', price: 4000000 },
+                    ],
+                    'Survei Sosial Ekonomi Nasional': [
+                        { id: 'sus-01', title: 'Susenas Maret 2024', description: 'Data sosial ekonomi rumah tangga Maret 2024', years: '2024', price: 5000000 },
+                        { id: 'sus-02', title: 'Susenas September 2023', description: 'Data sosial ekonomi rumah tangga September 2023', years: '2023', price: 5000000 },
+                        { id: 'sus-03', title: 'Susenas Maret 2023', description: 'Data sosial ekonomi rumah tangga Maret 2023', years: '2023', price: 4500000 },
+                    ],
+                    'Pendataan Potensi Desa': [
+                        { id: 'pod-01', title: 'Podes 2024', description: 'Data potensi desa 2024', years: '2024', price: 6000000 },
+                        { id: 'pod-02', title: 'Podes 2021', description: 'Data potensi desa 2021', years: '2021', price: 5500000 },
+                        { id: 'pod-03', title: 'Podes 2018', description: 'Data potensi desa 2018', years: '2018', price: 5000000 },
+                    ],
+                    'Survei Penduduk Antar Sensus': [
+                        { id: 'sup-01', title: 'Supas 2015', description: 'Data kependudukan antar sensus 2015', years: '2015', price: 5500000 },
+                    ],
+                    'Survei Perilaku Peduli Lingkungan Hidup': [
+                        { id: 'splh-01', title: 'SPPLH 2023', description: 'Data perilaku peduli lingkungan 2023', years: '2023', price: 3000000 },
+                        { id: 'splh-02', title: 'SPPLH 2020', description: 'Data perilaku peduli lingkungan 2020', years: '2020', price: 2500000 },
+                    ],
+                    'Survei Komuter': [
+                        { id: 'kom-01', title: 'Survei Komuter Jabodetabek 2023', description: 'Data komuter kawasan Jabodetabek', years: '2023', price: 3500000 },
+                        { id: 'kom-02', title: 'Survei Komuter Mebidang 2023', description: 'Data komuter kawasan Mebidang', years: '2023', price: 3000000 },
+                    ],
+                    'Survei Penilaian Tingkat Kebahagiaan': [
+                        { id: 'ptk-01', title: 'SPTK 2023', description: 'Indeks kebahagiaan masyarakat 2023', years: '2023', price: 2500000 },
+                        { id: 'ptk-02', title: 'SPTK 2021', description: 'Indeks kebahagiaan masyarakat 2021', years: '2021', price: 2000000 },
+                    ],
+                    'Survei Perilaku Anti Korupsi': [
+                        { id: 'pak-01', title: 'SPAK 2023', description: 'Data perilaku anti korupsi 2023', years: '2023', price: 2500000 },
+                        { id: 'pak-02', title: 'SPAK 2021', description: 'Data perilaku anti korupsi 2021', years: '2021', price: 2000000 },
+                    ],
+                    'Sensus Pertanian Subsektor': [
+                        { id: 'sps-01', title: 'ST Subsektor 2023 - Tanaman Pangan', description: 'Data subsektor tanaman pangan', years: '2023', price: 4000000 },
+                        { id: 'sps-02', title: 'ST Subsektor 2023 - Hortikultura', description: 'Data subsektor hortikultura', years: '2023', price: 4000000 },
+                    ],
+                }
+            },
+            ekonomi: {
+                label: 'Statistik Ekonomi',
+                icon: 'trending-up',
+                subKategori: {
+                    'Sensus Ekonomi': [
+                        { id: 'se-01', title: 'Sensus Ekonomi 2016 - UMB', description: 'Data usaha menengah besar SE2016', years: '2016', price: 7500000 },
+                        { id: 'se-02', title: 'Sensus Ekonomi 2016 - UMK', description: 'Data usaha mikro kecil SE2016', years: '2016', price: 7000000 },
+                    ],
+                    'Sensus Pertanian': [
+                        { id: 'spt-01', title: 'Sensus Pertanian 2023', description: 'Data sensus pertanian lengkap 2023', years: '2023', price: 7000000 },
+                        { id: 'spt-02', title: 'Sensus Pertanian 2013', description: 'Data sensus pertanian lengkap 2013', years: '2013', price: 5500000 },
+                    ],
+                    'Perdagangan Luar Negeri Ekspor': [
+                        { id: 'eks-01', title: 'PLN Ekspor 2024', description: 'Data ekspor barang Indonesia 2024', years: '2024', price: 4000000 },
+                        { id: 'eks-02', title: 'PLN Ekspor 2023', description: 'Data ekspor barang Indonesia 2023', years: '2023', price: 3500000 },
+                    ],
+                    'Perdagangan Luar Negeri Impor': [
+                        { id: 'imp-01', title: 'PLN Impor 2024', description: 'Data impor barang ke Indonesia 2024', years: '2024', price: 4000000 },
+                        { id: 'imp-02', title: 'PLN Impor 2023', description: 'Data impor barang ke Indonesia 2023', years: '2023', price: 3500000 },
+                    ],
+                    'Survei Ongkos Usaha Tani': [
+                        { id: 'out-01', title: 'SOUT 2023 - Padi', description: 'Data ongkos usaha tani padi 2023', years: '2023', price: 3000000 },
+                        { id: 'out-02', title: 'SOUT 2023 - Jagung', description: 'Data ongkos usaha tani jagung 2023', years: '2023', price: 3000000 },
+                    ],
+                    'Survei Tahunan Perusahaan Industri Besar/Sedang': [
+                        { id: 'ibs-01', title: 'IBS 2023', description: 'Data industri besar sedang 2023', years: '2023', price: 5000000 },
+                        { id: 'ibs-02', title: 'IBS 2022', description: 'Data industri besar sedang 2022', years: '2022', price: 4500000 },
+                    ],
+                    'Survei Pertanian Antar Sensus': [
+                        { id: 'sut-01', title: 'Sutas 2023', description: 'Data pertanian rumah tangga 2023', years: '2023', price: 4000000 },
+                    ],
+                    'Survei Industri Mikro dan Kecil Tahunan': [
+                        { id: 'imk-01', title: 'IMK 2024', description: 'Data industri mikro kecil 2024', years: '2024', price: 3500000 },
+                        { id: 'imk-02', title: 'IMK 2023', description: 'Data industri mikro kecil 2023', years: '2023', price: 3000000 },
+                    ],
+                    'Direktori Industri Besar dan Sedang': [
+                        { id: 'dir-01', title: 'Direktori IBS 2023', description: 'Direktori perusahaan industri besar sedang 2023', years: '2023', price: 3000000 },
+                    ],
+                    'Survei E-Commerce': [
+                        { id: 'ec-01', title: 'Survei E-Commerce 2023', description: 'Data usaha e-commerce Indonesia 2023', years: '2023', price: 2500000 },
+                        { id: 'ec-02', title: 'Survei E-Commerce 2022', description: 'Data usaha e-commerce Indonesia 2022', years: '2022', price: 2000000 },
+                    ],
+                }
+            },
+            lainnya: {
+                label: 'Lainnya',
+                icon: 'layers',
+                subKategori: {
+                    'Korespondensi KBLI-HS-ISIC': [
+                        { id: 'khi-01', title: 'Korespondensi KBLI-HS-ISIC 2023', description: 'Tabel korespondensi klasifikasi baku lapangan usaha dengan HS dan ISIC', years: '2023', price: 1500000 },
+                    ],
+                }
+            }
+        }
     },
-    {
-        id: 'md-002',
-        type: 'microdata',
-        title: 'Survei Angkatan Kerja Nasional (Sakernas) 2024',
-        description: 'Data ketenagakerjaan dan angkatan kerja Indonesia',
-        level: 'national',
-        years: '2020-2024',
-        price: 4500000,
-        isFree: false,
-        icon: 'briefcase',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-003',
-        type: 'microdata',
-        title: 'Survei Potensi Desa (Podes) 2024',
-        description: 'Data potensi desa dan kelurahan seluruh Indonesia',
-        level: 'village',
-        years: '2018, 2021, 2024',
-        price: 6000000,
-        isFree: false,
-        icon: 'home',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-004',
-        type: 'microdata',
-        title: 'Sensus Penduduk 2020',
-        description: 'Data sensus penduduk Indonesia lengkap',
-        level: 'national',
-        years: '2020',
-        price: 8000000,
-        isFree: false,
-        icon: 'users-2',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    
-    // Additional Microdata
-    {
-        id: 'md-005',
-        type: 'microdata',
-        title: 'Sensus Ekonomi 2024',
-        description: 'Data lengkap usaha/perusahaan di Indonesia',
-        level: 'national',
-        years: '2024',
-        price: 7500000,
-        isFree: false,
-        icon: 'trending-up',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-006',
-        type: 'microdata',
-        title: 'Survei Industri Mikro dan Kecil 2024',
-        description: 'Data industri mikro dan kecil di Indonesia',
-        level: 'province',
-        years: '2023-2024',
-        price: 3500000,
-        isFree: false,
-        icon: 'factory',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-007',
-        type: 'microdata',
-        title: 'Survei Pertanian Antar Sensus (SUTAS) 2023',
-        description: 'Data pertanian rumah tangga Indonesia',
-        level: 'province',
-        years: '2023',
-        price: 4000000,
-        isFree: false,
-        icon: 'sprout',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-008',
-        type: 'microdata',
-        title: 'Survei Konsumsi Makanan Individu (SKMI) 2023',
-        description: 'Data konsumsi makanan dan gizi masyarakat',
-        level: 'national',
-        years: '2023',
-        price: 3000000,
-        isFree: false,
-        icon: 'utensils',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-009',
-        type: 'microdata',
-        title: 'Survei Demografi dan Kesehatan Indonesia (SDKI) 2022',
-        description: 'Data kesehatan reproduksi dan kependudukan',
-        level: 'national',
-        years: '2022',
-        price: 5500000,
-        isFree: false,
-        icon: 'heart-pulse',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    {
-        id: 'md-010',
-        type: 'microdata',
-        title: 'Survei Keamanan Pangan 2023',
-        description: 'Data keamanan dan ketahanan pangan rumah tangga',
-        level: 'province',
-        years: '2023',
-        price: 2500000,
-        isFree: false,
-        icon: 'shield-check',
-        badge: 'Data Mikro',
-        badgeColor: 'blue'
-    },
-    
-    // Publications
-    {
-        id: 'pub-001',
-        type: 'publication',
-        title: 'Statistik Indonesia 2024',
-        description: 'Publikasi tahunan statistik Indonesia tanpa watermark',
-        level: 'national',
-        years: '2024',
-        price: 150000,
-        isFree: false,
+    publication: {
+        label: 'Publikasi Elektronik',
         icon: 'book-open',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 650
+        color: 'green',
+        // Publikasi tidak punya kategori/subkategori, langsung ke produk
+        products: [
+            { id: 'pub-001', title: 'Statistik Indonesia 2024', description: 'Publikasi tahunan statistik Indonesia tanpa watermark', years: '2024', price: 150000, format: 'PDF', pages: 650 },
+            { id: 'pub-002', title: 'Indikator Ekonomi Indonesia 2024', description: 'Publikasi bulanan indikator ekonomi', years: '2024', price: 75000, format: 'PDF', pages: 120 },
+            { id: 'pub-003', title: 'Buletin Statistik Perdagangan Luar Negeri', description: 'Publikasi triwulanan perdagangan internasional', years: '2024', price: 0, isFree: true, format: 'PDF', pages: 85 },
+            { id: 'pub-004', title: 'Statistik Kriminal 2023', description: 'Data statistik kriminalitas Indonesia', years: '2023', price: 100000, format: 'PDF', pages: 200 },
+            { id: 'pub-005', title: 'Profil Kemiskinan Indonesia 2024', description: 'Analisis kemiskinan dan kesenjangan', years: '2024', price: 125000, format: 'PDF', pages: 180 },
+            { id: 'pub-006', title: 'Statistik Transportasi Darat 2023', description: 'Data transportasi dan mobilitas', years: '2023', price: 90000, format: 'PDF', pages: 150 },
+        ]
     },
-    {
-        id: 'pub-002',
-        type: 'publication',
-        title: 'Indikator Ekonomi Indonesia 2024',
-        description: 'Publikasi bulanan indikator ekonomi',
-        level: 'national',
-        years: '2024',
-        price: 75000,
-        isFree: false,
-        icon: 'file-text',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 120
-    },
-    {
-        id: 'pub-003',
-        type: 'publication',
-        title: 'Buletin Statistik Perdagangan Luar Negeri',
-        description: 'Publikasi triwulanan perdagangan internasional',
-        level: 'national',
-        years: '2024',
-        price: 0,
-        isFree: true,
-        icon: 'globe',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 85
-    },
-    {
-        id: 'pub-004',
-        type: 'publication',
-        title: 'Statistik Kriminal 2023',
-        description: 'Data statistik kriminalitas Indonesia',
-        level: 'national',
-        years: '2023',
-        price: 100000,
-        isFree: false,
-        icon: 'shield-alert',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 200
-    },
-    {
-        id: 'pub-005',
-        type: 'publication',
-        title: 'Profil Kemiskinan Indonesia 2024',
-        description: 'Analisis kemiskinan dan kesenjangan',
-        level: 'national',
-        years: '2024',
-        price: 125000,
-        isFree: false,
-        icon: 'hand-heart',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 180
-    },
-    {
-        id: 'pub-006',
-        type: 'publication',
-        title: 'Statistik Transportasi Darat 2023',
-        description: 'Data transportasi dan mobilitas',
-        level: 'national',
-        years: '2023',
-        price: 90000,
-        isFree: false,
-        icon: 'truck',
-        badge: 'Publikasi Elektronik',
-        badgeColor: 'green',
-        format: 'PDF',
-        pages: 150
-    },
-    
-    // Digital Maps
-    {
-        id: 'map-001',
-        type: 'map',
-        title: 'Peta Digital Wilayah Indonesia - Provinsi',
-        description: 'File SHP batas administrasi tingkat provinsi',
-        level: 'province',
-        years: '2024',
-        price: 500000,
-        isFree: false,
+    map: {
+        label: 'Peta Wilkerstat',
         icon: 'map',
-        badge: 'Peta Digital',
-        badgeColor: 'orange',
-        format: 'SHP',
-        coverage: '38 Provinsi'
-    },
-    {
-        id: 'map-002',
-        type: 'map',
-        title: 'Peta Digital Wilayah Indonesia - Kabupaten/Kota',
-        description: 'File SHP batas administrasi tingkat kabupaten/kota',
-        level: 'city',
-        years: '2024',
-        price: 1200000,
-        isFree: false,
-        icon: 'map-pin',
-        badge: 'Peta Digital',
-        badgeColor: 'orange',
-        format: 'SHP',
-        coverage: '514 Kab/Kota'
-    },
-    {
-        id: 'map-003',
-        type: 'map',
-        title: 'Peta Digital Wilayah Indonesia - Desa/Kelurahan',
-        description: 'File SHP batas administrasi tingkat desa/kelurahan',
-        level: 'village',
-        years: '2024',
-        price: 2500000,
-        isFree: false,
-        icon: 'map-pinned',
-        badge: 'Peta Digital',
-        badgeColor: 'orange',
-        format: 'SHP',
-        coverage: '83,000+ Desa'
-    },
-    {
-        id: 'map-004',
-        type: 'map',
-        title: 'Peta Digital Wilayah Indonesia - Kecamatan',
-        description: 'File SHP batas administrasi tingkat kecamatan',
-        level: 'city',
-        years: '2024',
-        price: 1800000,
-        isFree: false,
-        icon: 'map-pin-off',
-        badge: 'Peta Digital',
-        badgeColor: 'orange',
-        format: 'SHP',
-        coverage: '7,000+ Kecamatan'
-    },
-    {
-        id: 'map-005',
-        type: 'map',
-        title: 'Peta Tematik Kepadatan Penduduk 2024',
-        description: 'Peta tematik distribusi penduduk Indonesia',
-        level: 'national',
-        years: '2024',
-        price: 800000,
-        isFree: false,
-        icon: 'users',
-        badge: 'Peta Digital',
-        badgeColor: 'orange',
-        format: 'SHP',
-        coverage: 'Nasional'
+        color: 'orange',
+        products: [
+            { id: 'map-001', title: 'Peta Digital Wilayah Indonesia - Provinsi', description: 'File SHP batas administrasi tingkat provinsi', years: '2024', price: 500000, format: 'SHP', coverage: '38 Provinsi' },
+            { id: 'map-002', title: 'Peta Digital Wilayah Indonesia - Kabupaten/Kota', description: 'File SHP batas administrasi tingkat kabupaten/kota', years: '2024', price: 1200000, format: 'SHP', coverage: '514 Kab/Kota' },
+            { id: 'map-003', title: 'Peta Digital Wilayah Indonesia - Desa/Kelurahan', description: 'File SHP batas administrasi tingkat desa/kelurahan', years: '2024', price: 2500000, format: 'SHP', coverage: '83,000+ Desa' },
+            { id: 'map-004', title: 'Peta Digital Wilayah Indonesia - Kecamatan', description: 'File SHP batas administrasi tingkat kecamatan', years: '2024', price: 1800000, format: 'SHP', coverage: '7,000+ Kecamatan' },
+            { id: 'map-005', title: 'Peta Tematik Kepadatan Penduduk 2024', description: 'Peta tematik distribusi penduduk Indonesia', years: '2024', price: 800000, format: 'SHP', coverage: 'Nasional' },
+        ]
     }
-];
+};
+
+// Flat products array for cart lookup
+const products = [];
+Object.entries(catalogData).forEach(([catKey, cat]) => {
+    if (cat.products) {
+        cat.products.forEach(p => products.push({ ...p, type: catKey, badge: cat.label, badgeColor: cat.color, level: p.level || 'national' }));
+    }
+    if (cat.kategori) {
+        Object.entries(cat.kategori).forEach(([, kat]) => {
+            Object.entries(kat.subKategori).forEach(([, prods]) => {
+                prods.forEach(p => products.push({ ...p, type: catKey, badge: cat.label, badgeColor: cat.color, level: p.level || 'national' }));
+            });
+        });
+    }
+});
 
 // Cart Management
 let cart = [];
-let currentView = 'grid'; // 'grid' or 'list'
+let currentView = 'grid';
 
-// Load cart from localStorage
 function loadCart() {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
-        try {
-            cart = JSON.parse(savedCart);
-            updateCartUI();
-        } catch (e) {
-            console.error('Error loading cart:', e);
-            cart = [];
-        }
+        try { cart = JSON.parse(savedCart); updateCartUI(); } catch (e) { cart = []; }
     }
 }
 
-// Save cart to localStorage
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// =====================
+// CATALOG NAVIGATION
+// =====================
+
+function showStep(stepId) {
+    if (stepId === 'stepKatalog') {
+        document.getElementById('stepKategori').classList.add('hidden');
+        document.getElementById('stepSubKategori').classList.add('hidden');
+    } else if (stepId === 'stepKategori') {
+        document.getElementById('stepKategori').classList.remove('hidden');
+        document.getElementById('stepSubKategori').classList.add('hidden');
+    } else if (stepId === 'stepSubKategori') {
+        document.getElementById('stepKategori').classList.remove('hidden');
+        document.getElementById('stepSubKategori').classList.remove('hidden');
+    }
+}
+
+function updateBreadcrumb() {
+    document.getElementById('navBreadcrumb').classList.add('hidden');
+}
+
+function setActiveCard(selector, activeId, colorClass) {
+    document.querySelectorAll(selector).forEach(btn => {
+        btn.classList.remove('border-blue-500', 'bg-blue-50', 'border-emerald-500', 'bg-emerald-50', 'border-orange-500', 'bg-orange-50');
+        btn.classList.add('border-gray-200');
+    });
+    if (activeId) {
+        const el = document.getElementById(activeId);
+        if (el) { el.classList.remove('border-gray-200'); el.classList.add(...colorClass.split(' ')); }
+    }
+}
+
+function goToStep(step) {
+    document.getElementById('productsSection').classList.add('hidden');
+    if (step === 'katalog') {
+        selectedCatalog = null; selectedKategori = null; selectedSubKategori = null;
+        showStep('stepKatalog');
+        setActiveCard('.catalog-btn', null, '');
+        setActiveCard('.kategori-btn', null, '');
+    } else if (step === 'kategori') {
+        selectedKategori = null; selectedSubKategori = null;
+        showStep('stepKategori');
+        setActiveCard('.kategori-btn', null, '');
+    } else if (step === 'subkategori') {
+        selectedSubKategori = null;
+        renderSubKategori();
+        showStep('stepSubKategori');
+    }
+}
+
+// Tombol back dari halaman produk
+function backFromProducts() {
+    document.getElementById('productsSection').classList.add('hidden');
+}
+
+function selectCatalog(type) {
+    selectedCatalog = type;
+    selectedKategori = null;
+    selectedSubKategori = null;
+    const cat = catalogData[type];
+
+    const colorMap = {
+        microdata: 'border-blue-500 bg-blue-50',
+        publication: 'border-emerald-500 bg-emerald-50',
+        map: 'border-orange-500 bg-orange-50',
+    };
+    setActiveCard('.catalog-btn', `cat-${type}`, colorMap[type]);
+
+    if (type === 'microdata') {
+        showStep('stepKategori');
+        setActiveCard('.kategori-btn', null, '');
+        document.getElementById('productsSection').classList.add('hidden');
+    } else {
+        showStep('stepKatalog');
+        showProductsSection(type);
+        document.getElementById('searchInput').value = '';
+        document.getElementById('productsSection').classList.remove('hidden');
+        renderProducts(cat.products.map(p => ({ level: 'national', ...p, type, badge: cat.label, badgeColor: cat.color })));
+        lucide.createIcons();
+    }
+}
+
+function selectKategori(kat) {
+    selectedKategori = kat;
+    selectedSubKategori = null;
+    setActiveCard('.kategori-btn', `kat-${kat}`, 'border-blue-500 bg-blue-50');
+    renderSubKategori();
+    showStep('stepSubKategori');
+    document.getElementById('productsSection').classList.add('hidden');
+}
+
+function renderSubKategori() {
+    const kat = catalogData[selectedCatalog].kategori[selectedKategori];
+    const container = document.getElementById('subKategoriList');
+    container.innerHTML = Object.keys(kat.subKategori).map(subKey => {
+        const count = kat.subKategori[subKey].length;
+        const isActive = selectedSubKategori === subKey;
+        return `
+            <button onclick="selectSubKategori('${subKey.replace(/'/g, "\\'")}')"
+                class="group text-left p-4 border-2 rounded-xl transition-all ${isActive
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-500 hover:bg-blue-50'}">
+                <p class="font-semibold text-sm mb-1 leading-tight ${isActive ? 'text-blue-700' : 'text-gray-900'}">${subKey}</p>
+                <p class="text-xs ${isActive ? 'text-blue-500' : 'text-gray-500'}">${count} dataset</p>
+            </button>
+        `;
+    }).join('');
+}
+
+function selectSubKategori(subKey) {
+    selectedSubKategori = subKey;
+    const cat = catalogData[selectedCatalog];
+    const kat = cat.kategori[selectedKategori];
+    const prods = kat.subKategori[subKey].map(p => ({ level: 'national', ...p, type: selectedCatalog, badge: cat.label, badgeColor: cat.color }));
+
+    updateBreadcrumb();
+    renderSubKategori(); // re-render untuk update active state
+    document.getElementById('publicationFilters').classList.add('hidden');
+    document.getElementById('searchInput').value = '';
+    document.getElementById('productsSection').classList.remove('hidden');
+    showProductsSection(selectedCatalog);
+    renderProducts(prods);
+    lucide.createIcons();
+
+    // Scroll ke produk
+    setTimeout(() => document.getElementById('productsSection').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     loadCart();
-    renderProducts(products);
-    initializeFilters();
     initializeViewToggle();
     initializeCart();
-    updateResultCount(products.length);
+    initializeFilters();
+    initializeDataSelectionModal();
 });
 
 // Render Products
@@ -419,7 +397,7 @@ function createProductCardGrid(product) {
     }
     
     return `
-        <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-4 flex flex-col">
+        <a href="produk.html?id=${product.id}" class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-4 flex flex-col cursor-pointer">
             <div class="flex items-start justify-between mb-3">
                 <div class="w-10 h-10 bg-${product.badgeColor}-50 rounded-lg flex items-center justify-center flex-shrink-0">
                     <i data-lucide="${icon}" class="w-5 h-5 text-${product.badgeColor}-600"></i>
@@ -460,14 +438,14 @@ function createProductCardGrid(product) {
                     <p class="text-xs text-gray-500">${!isFree ? 'Fullset' : 'Akses Terbuka'}</p>
                 </div>
                 <button 
-                    onclick="addToCart('${product.id}')"
+                    onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}')"
                     class="${buttonClass} px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 hover:scale-105"
                 >
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     Tambah
                 </button>
             </div>
-        </div>
+        </a>
     `;
 }
 
@@ -514,7 +492,7 @@ function createProductCardList(product) {
     }
 
     return `
-        <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-5">
+        <a href="produk.html?id=${product.id}" class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-blue-200 p-5 block">
             <div class="flex items-start gap-4">
                 <div class="w-14 h-14 bg-${product.badgeColor}-50 rounded-lg flex items-center justify-center flex-shrink-0">
                     <i data-lucide="${icon}" class="w-7 h-7 text-${product.badgeColor}-600"></i>
@@ -551,7 +529,7 @@ function createProductCardList(product) {
                         <p class="text-xs text-gray-500 mt-0.5">${!isFree ? 'Fullset' : 'Akses Terbuka'}</p>
                     </div>
                     <button
-                        onclick="addToCart('${product.id}')"
+                        onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}')"
                         class="${buttonClass} px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap hover:scale-105"
                     >
                         <i data-lucide="plus" class="w-4 h-4"></i>
@@ -559,7 +537,7 @@ function createProductCardList(product) {
                     </button>
                 </div>
             </div>
-        </div>
+        </a>
     `;
 }
 
@@ -575,80 +553,114 @@ function getLevelLabel(level) {
     return labels[level] || level;
 }
 
+// Kabupaten data per provinsi (sample)
+const kabupatenData = {
+    aceh: ['Kab. Aceh Besar', 'Kab. Pidie', 'Kota Banda Aceh', 'Kota Sabang'],
+    sumut: ['Kab. Deli Serdang', 'Kab. Langkat', 'Kota Medan', 'Kota Binjai'],
+    sumbar: ['Kab. Agam', 'Kab. Tanah Datar', 'Kota Padang', 'Kota Bukittinggi'],
+    riau: ['Kab. Kampar', 'Kab. Bengkalis', 'Kota Pekanbaru', 'Kota Dumai'],
+    jambi: ['Kab. Batanghari', 'Kab. Muaro Jambi', 'Kota Jambi'],
+    dki: ['Kota Jakarta Pusat', 'Kota Jakarta Utara', 'Kota Jakarta Barat', 'Kota Jakarta Selatan', 'Kota Jakarta Timur'],
+    jabar: ['Kab. Bogor', 'Kab. Bandung', 'Kota Bandung', 'Kota Bekasi', 'Kota Depok'],
+    jateng: ['Kab. Semarang', 'Kab. Banyumas', 'Kota Semarang', 'Kota Solo'],
+    diy: ['Kab. Sleman', 'Kab. Bantul', 'Kab. Gunungkidul', 'Kota Yogyakarta'],
+    jatim: ['Kab. Malang', 'Kab. Sidoarjo', 'Kota Surabaya', 'Kota Malang'],
+    bali: ['Kab. Badung', 'Kab. Gianyar', 'Kab. Tabanan', 'Kota Denpasar'],
+};
+
+const YEAR_MIN = 2000;
+const YEAR_MAX = new Date().getFullYear();
+
+function initYearSlider(fromId, toId, trackId, labelId) {
+    const fromEl = document.getElementById(fromId);
+    const toEl = document.getElementById(toId);
+    const trackEl = document.getElementById(trackId);
+    const labelEl = document.getElementById(labelId);
+
+    // Set max to current year
+    fromEl.max = YEAR_MAX;
+    toEl.max = YEAR_MAX;
+    toEl.value = YEAR_MAX;
+
+    function update() {
+        let from = parseInt(fromEl.value);
+        let to = parseInt(toEl.value);
+        if (from > to) { [fromEl.value, toEl.value] = [to, from]; from = parseInt(fromEl.value); to = parseInt(toEl.value); }
+        const pct = (v) => ((v - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * 100;
+        trackEl.style.left = pct(from) + '%';
+        trackEl.style.width = (pct(to) - pct(from)) + '%';
+        labelEl.textContent = `${from} — ${to}`;
+        applyCurrentFilters();
+    }
+
+    fromEl.addEventListener('input', update);
+    toEl.addEventListener('input', update);
+    update();
+}
+
+function showProductsSection(type) {
+    document.getElementById('microdataFilters').classList.toggle('hidden', type !== 'microdata');
+    document.getElementById('publicationFilters').classList.toggle('hidden', type !== 'publication');
+    document.getElementById('mapFilters').classList.toggle('hidden', type !== 'map');
+}
+
 // Initialize Filters
 function initializeFilters() {
-    const searchInput = document.getElementById('searchInput');
-    const categoryRadios = document.querySelectorAll('input[name="category"]');
-    const levelRadios = document.querySelectorAll('input[name="level"]');
-    const resetBtn = document.getElementById('resetFilters');
-    
-    let currentCategory = '';
-    let currentLevel = '';
-    let currentSearch = '';
-    
-    // Search
-    searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value.toLowerCase();
-        filterProducts();
-    });
-    
-    // Category Radio Buttons
-    categoryRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            currentCategory = e.target.value;
-            filterProducts();
-        });
-    });
-    
-    // Level Radio Buttons
-    levelRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            currentLevel = e.target.value;
-            filterProducts();
-        });
-    });
-    
-    // Reset Button
-    resetBtn.addEventListener('click', () => {
-        currentCategory = '';
-        currentLevel = '';
-        currentSearch = '';
-        
-        searchInput.value = '';
-        categoryRadios.forEach(radio => {
-            radio.checked = radio.value === '';
-        });
-        levelRadios.forEach(radio => {
-            radio.checked = radio.value === '';
-        });
-        
-        filterProducts();
-    });
-    
-    function filterProducts() {
-        let filtered = products;
-        
-        // Filter by category
-        if (currentCategory) {
-            filtered = filtered.filter(p => p.type === currentCategory);
+    document.getElementById('searchInput').addEventListener('input', () => applyCurrentFilters());
+
+    // Year sliders
+    initYearSlider('yearFrom', 'yearTo', 'yearTrack', 'yearRangeLabel');
+    initYearSlider('pubYearFrom', 'pubYearTo', 'pubYearTrack', 'pubYearRangeLabel');
+    initYearSlider('mapYearFrom', 'mapYearTo', 'mapYearTrack', 'mapYearRangeLabel');
+
+    // Level dropdowns
+    document.getElementById('filterLevel').addEventListener('change', () => applyCurrentFilters());
+    document.getElementById('filterMapLevel').addEventListener('change', () => applyCurrentFilters());
+
+    // Provinsi → populate kabupaten
+    document.getElementById('filterProvinsi').addEventListener('change', (e) => {
+        const kabEl = document.getElementById('filterKabupaten');
+        const list = kabupatenData[e.target.value] || [];
+        if (list.length) {
+            kabEl.disabled = false;
+            kabEl.innerHTML = '<option value="">Semua Kab/Kota</option>' +
+                list.map(k => `<option value="${k}">${k}</option>`).join('');
+        } else {
+            kabEl.disabled = true;
+            kabEl.innerHTML = '<option value="">Pilih provinsi dulu</option>';
         }
-        
-        // Filter by level
-        if (currentLevel) {
-            filtered = filtered.filter(p => p.level === currentLevel);
-        }
-        
-        // Filter by search
-        if (currentSearch) {
-            filtered = filtered.filter(p => 
-                p.title.toLowerCase().includes(currentSearch) ||
-                p.description.toLowerCase().includes(currentSearch) ||
-                p.badge.toLowerCase().includes(currentSearch)
-            );
-        }
-        
-        renderProducts(filtered);
-    }
+        applyCurrentFilters();
+    });
+    document.getElementById('filterKabupaten').addEventListener('change', () => applyCurrentFilters());
+
+    // Reset
+    document.getElementById('resetFilters').addEventListener('click', () => {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('filterLevel').value = '';
+        document.getElementById('filterMapLevel').value = '';
+        document.getElementById('filterProvinsi').value = '';
+        document.getElementById('filterKabupaten').innerHTML = '<option value="">Pilih provinsi dulu</option>';
+        document.getElementById('filterKabupaten').disabled = true;
+
+        // Reset sliders
+        ['yearFrom', 'pubYearFrom', 'mapYearFrom'].forEach(id => { document.getElementById(id).value = YEAR_MIN; });
+        ['yearTo', 'pubYearTo', 'mapYearTo'].forEach(id => { document.getElementById(id).value = YEAR_MAX; });
+        initYearSlider('yearFrom', 'yearTo', 'yearTrack', 'yearRangeLabel');
+        initYearSlider('pubYearFrom', 'pubYearTo', 'pubYearTrack', 'pubYearRangeLabel');
+        initYearSlider('mapYearFrom', 'mapYearTo', 'mapYearTrack', 'mapYearRangeLabel');
+
+        applyCurrentFilters();
+    });
+}
+
+function extractMinYear(years) {
+    const nums = String(years).match(/\d{4}/g);
+    return nums ? Math.min(...nums.map(Number)) : 0;
+}
+
+function extractMaxYear(years) {
+    const nums = String(years).match(/\d{4}/g);
+    return nums ? Math.max(...nums.map(Number)) : 9999;
 }
 
 // Initialize View Toggle
@@ -678,26 +690,49 @@ function initializeViewToggle() {
 }
 
 function applyCurrentFilters() {
-    const searchInput = document.getElementById('searchInput');
-    const categoryRadios = document.querySelectorAll('input[name="category"]:checked');
-    const levelRadios = document.querySelectorAll('input[name="level"]:checked');
-    
-    let filtered = products;
-    
-    const categoryValue = categoryRadios[0]?.value || '';
-    const levelValue = levelRadios[0]?.value || '';
-    const searchValue = searchInput.value.toLowerCase();
-    
-    if (categoryValue) filtered = filtered.filter(p => p.type === categoryValue);
-    if (levelValue) filtered = filtered.filter(p => p.level === levelValue);
-    if (searchValue) {
-        filtered = filtered.filter(p => 
-            p.title.toLowerCase().includes(searchValue) ||
-            p.description.toLowerCase().includes(searchValue) ||
-            p.badge.toLowerCase().includes(searchValue)
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat = catalogData[selectedCatalog];
+    if (!cat) return;
+
+    let base = [];
+    if (selectedSubKategori) {
+        const kat = cat.kategori[selectedKategori];
+        base = kat.subKategori[selectedSubKategori].map(p => ({ level: 'national', ...p, type: selectedCatalog, badge: cat.label, badgeColor: cat.color }));
+    } else if (cat.products) {
+        base = cat.products.map(p => ({ level: 'national', ...p, type: selectedCatalog, badge: cat.label, badgeColor: cat.color }));
+    }
+
+    let filtered = base;
+
+    if (search) {
+        filtered = filtered.filter(p =>
+            p.title.toLowerCase().includes(search) ||
+            p.description.toLowerCase().includes(search)
         );
     }
-    
+
+    if (selectedCatalog === 'microdata') {
+        const level = document.getElementById('filterLevel')?.value;
+        const yearFrom = parseInt(document.getElementById('yearFrom')?.value) || YEAR_MIN;
+        const yearTo = parseInt(document.getElementById('yearTo')?.value) || YEAR_MAX;
+        if (level) filtered = filtered.filter(p => p.level === level);
+        filtered = filtered.filter(p => extractMaxYear(p.years) >= yearFrom && extractMinYear(p.years) <= yearTo);
+    }
+
+    if (selectedCatalog === 'publication') {
+        const yearFrom = parseInt(document.getElementById('pubYearFrom')?.value) || YEAR_MIN;
+        const yearTo = parseInt(document.getElementById('pubYearTo')?.value) || YEAR_MAX;
+        filtered = filtered.filter(p => extractMaxYear(p.years) >= yearFrom && extractMinYear(p.years) <= yearTo);
+    }
+
+    if (selectedCatalog === 'map') {
+        const level = document.getElementById('filterMapLevel')?.value;
+        const yearFrom = parseInt(document.getElementById('mapYearFrom')?.value) || YEAR_MIN;
+        const yearTo = parseInt(document.getElementById('mapYearTo')?.value) || YEAR_MAX;
+        if (level) filtered = filtered.filter(p => p.level === level);
+        filtered = filtered.filter(p => extractMaxYear(p.years) >= yearFrom && extractMinYear(p.years) <= yearTo);
+    }
+
     renderProducts(filtered);
 }
 
@@ -1373,11 +1408,9 @@ function addToCartDirect(productId) {
     showNotification(`${product.title} ditambahkan ke keranjang`, 'success');
 }
 
-// Update addToCart function to open modal for microdata
 window.addToCart = function(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
-    
     if (product.type === 'microdata' && !product.isFree) {
         openDataSelectionModal(productId);
     } else {
@@ -1385,13 +1418,17 @@ window.addToCart = function(productId) {
     }
 };
 
+window.selectCatalog = selectCatalog;
+window.selectKategori = selectKategori;
+window.selectSubKategori = selectSubKategori;
+window.goToStep = goToStep;
+window.backFromProducts = backFromProducts;
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', function() {
     loadCart();
-    renderProducts(products);
-    initializeFilters();
     initializeViewToggle();
     initializeCart();
+    initializeFilters();
     initializeDataSelectionModal();
-    updateResultCount(products.length);
 });
